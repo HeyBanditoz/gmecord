@@ -13,3 +13,5 @@ Gmecord is a simple Discord bot/Spark webserver that connects a Discord channel 
 ## What isn't
 * Images uploaded to Discord aren't uploaded to Groupme's service. They will just be links in the message.
  
+## Builds
+Builds should be posted to [Jenkins.](https://jenkins.banditoz.io/job/gmecord/)
