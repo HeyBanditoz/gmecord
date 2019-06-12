@@ -91,7 +91,8 @@ public class DiscordMessageCreator {
                     .append(googleMaps)
                     .append(message.getAttachments()[0].getLat())
                     .append(",")
-                    .append(message.getAttachments()[0].getLng());
+                    .append(message.getAttachments()[0].getLng())
+                    .append(" ");
         }
         else if (message.getAttachments()[0].getType().compareToIgnoreCase("emoji") == 0) {
             return; // emojis aren't supported.
