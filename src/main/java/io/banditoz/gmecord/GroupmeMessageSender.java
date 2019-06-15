@@ -1,8 +1,6 @@
 package io.banditoz.gmecord;
 
 import com.google.gson.Gson;
-import io.banditoz.gmecord.Settings;
-import io.banditoz.gmecord.SettingsManager;
 import io.banditoz.gmecord.api.BotMessage;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,11 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class GroupmeMessageSender {
-    private BotMessage message;
-    private Settings settings;
-    private Logger logger;
+    private final BotMessage message;
+    private final Settings settings;
+    private final Logger logger;
 
     /**
      * Constructor with a BotMessage.
@@ -45,10 +44,16 @@ public class GroupmeMessageSender {
         post.setEntity(entity);
         CloseableHttpResponse response;
         try {
-            logger.debug("Sending message to Groupme: " + json);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Sending message to Groupme: " + json);
+            }
             response = client.execute(post);
+            if (logger.isDebugEnabled()) {
+                logger.debug(response.getStatusLine().toString());
+                logger.debug("Their response headers: " + Arrays.toString(response.getAllHeaders()));
+            }
         } catch (IOException e) {
-            logger.error("Error on sending message to Groupme! json:" + json + " .", e);
+            logger.error("Error on sending message to Groupme! json:" + json + " ", e);
         } finally {
             post.reset();
         }

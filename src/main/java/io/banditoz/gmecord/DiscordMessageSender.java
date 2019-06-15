@@ -1,8 +1,8 @@
 package io.banditoz.gmecord;
 
 public class DiscordMessageSender {
-    private StringBuilder message;
-    private Settings settings;
+    private final StringBuilder message;
+    private final Settings settings;
 
     public DiscordMessageSender(String message) {
         this.message = new StringBuilder(message);

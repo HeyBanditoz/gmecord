@@ -1,11 +1,10 @@
 package io.banditoz.gmecord.events;
 
 import io.banditoz.gmecord.*;
-import net.dv8tion.jda.core.entities.Message;
+import io.banditoz.gmecord.util.BuildAttachments;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-import java.net.URI;
 
 public class DiscordMessageEvent extends ListenerAdapter {
     @Override
@@ -14,12 +13,7 @@ public class DiscordMessageEvent extends ListenerAdapter {
         if (e.getChannel().getId().equals(SettingsManager.getInstance().getSettings().getChannel()) &&
                 (e.getAuthor().getId().compareToIgnoreCase(Bot.getJda().getSelfUser().getId()) != 0)) {
             if (!e.getMessage().getAttachments().isEmpty()) {
-                StringBuilder attachments = new StringBuilder();
-                for (Message.Attachment a : e.getMessage().getAttachments()) {
-                    attachments.append("<ATTACHMENT> ");
-                    attachments.append(URI.create(a.getUrl()));
-                    attachments.append(" ");
-                }
+                StringBuilder attachments = BuildAttachments.buildImageAttachments(e);
                 GroupmeMessageCreator gmeMessage = new GroupmeMessageCreator("<" + e.getAuthor().getName() + "> " + attachments.toString() + message, false);
                 gmeMessage.build();
                 new GroupmeMessageSender(gmeMessage.getMessage()).sendMessageToGroupMe();

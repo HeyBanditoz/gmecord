@@ -23,7 +23,9 @@ public class WebServer extends Thread {
             try {
                 res.type("application/json");
                 GroupmeMessage message = DeserializeGroupmeMessage.deserializeGivenString(req.body());
-                logger.debug("Message inbound from Groupme: " + message);
+                if (logger.isDebugEnabled())
+                    logger.debug("Message inbound from Groupme: " + message);
+
                 DiscordMessageCreator creator = new DiscordMessageCreator(message, message.getSystem());
                 creator.build();
                 new DiscordMessageSender(creator.createMessage()).sendMessageToDiscord();

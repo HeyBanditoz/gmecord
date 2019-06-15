@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GroupmeMessageCreator {
-    private BotMessage message;
+    private final BotMessage message;
     private StringBuilder initialMessage;
     private List<Attachment> initialAttachments;
 
