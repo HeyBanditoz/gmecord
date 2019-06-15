@@ -27,8 +27,6 @@ repositories {
 dependencies {
     compile group: "com.sparkjava", name: "spark-core", version: "2.9.1"
     compile group: 'com.qmetric', name: 'spark-authentication', version: '1.4'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.8'
-    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.3.1'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile ('net.dv8tion:JDA:3.8.3_463') {
         exclude module: 'opus-java'

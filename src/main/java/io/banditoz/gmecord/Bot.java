@@ -4,6 +4,7 @@ import io.banditoz.gmecord.events.DiscordMessageEvent;
 import io.banditoz.gmecord.util.BuildMentionables;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,7 @@ public class Bot {
     private static JDA jda;
     private static HashMap<String, String> mentionableGroupme;
     private static HashMap<String, String> mentionableDiscord;
+    public static final OkHttpClient client = new OkHttpClient(); // should this be public? oh well!
 
     public Bot() throws LoginException, InterruptedException {
         Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
@@ -35,9 +37,10 @@ public class Bot {
             @Override
             public void run() {
                 try {
+                    long before = System.nanoTime();
                     mentionableGroupme = BuildMentionables.buildGroupmeMentionables();
                     mentionableDiscord = BuildMentionables.buildDiscordMentionables();
-                    logger.info("Mentionables built.");
+                    logger.info("Mentionables built." + " (Took " + (System.nanoTime() - before) / 1000000 + " ms.)");
                 }
                 catch (Exception ex) {
                     logger.error("Exception in building mentionables!", ex);

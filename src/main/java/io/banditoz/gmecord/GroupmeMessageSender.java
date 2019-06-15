@@ -2,23 +2,16 @@ package io.banditoz.gmecord;
 
 import com.google.gson.Gson;
 import io.banditoz.gmecord.api.BotMessage;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.Arrays;
 
 public class GroupmeMessageSender {
     private final BotMessage message;
     private final Settings settings;
     private final Logger logger;
+    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     /**
      * Constructor with a BotMessage.
@@ -37,25 +30,21 @@ public class GroupmeMessageSender {
         String json;
         String botID = settings.getBotID();
         message.setBotId(botID);
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost post = new HttpPost("https://api.groupme.com/v3/bots/post");
         json = new Gson().toJson(message);
-        HttpEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
-        post.setEntity(entity);
-        CloseableHttpResponse response;
-        try {
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url("https://api.groupme.com/v3/bots/post")
+                .post(body)
+                .build();
+        if (logger.isDebugEnabled())
+            logger.debug("Sending message to Groupme: " + json);
+        try (Response response = Bot.client.newCall(request).execute()) {
             if (logger.isDebugEnabled()) {
-                logger.debug("Sending message to Groupme: " + json);
+                logger.debug(response.protocol() + " " + response.code() + " " + response.message() + " (Took " + (response.receivedResponseAtMillis() - response.sentRequestAtMillis()) + " ms for a response.)");
+                logger.debug("Their response headers:\n" + response.headers());
             }
-            response = client.execute(post);
-            if (logger.isDebugEnabled()) {
-                logger.debug(response.getStatusLine().toString());
-                logger.debug("Their response headers: " + Arrays.toString(response.getAllHeaders()));
-            }
-        } catch (IOException e) {
-            logger.error("Error on sending message to Groupme! json:" + json + " ", e);
-        } finally {
-            post.reset();
+        } catch (Exception e) {
+            logger.error("Error on sending message to Groupme! json: " + json + " ", e);
         }
     }
 }

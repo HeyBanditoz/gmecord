@@ -5,34 +5,23 @@ import io.banditoz.gmecord.SettingsManager;
 import io.banditoz.gmecord.api.Member;
 import io.banditoz.gmecord.api.Response;
 import net.dv8tion.jda.core.entities.User;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
 public class BuildMentionables {
-    public static HashMap<String, String> buildGroupmeMentionables() {
+    public static HashMap<String, String> buildGroupmeMentionables() throws Exception {
         HashMap<String, String> mentionables = new HashMap<>();
-        CloseableHttpClient client = HttpClients.createDefault();
         String initialUrl = "https://api.groupme.com/v3/groups/" + SettingsManager.getInstance().getSettings().getGroupID() + "?token=" + SettingsManager.getInstance().getSettings().getGroupMeToken();
-        HttpGet get = new HttpGet(initialUrl);
-        CloseableHttpResponse response;
-        try {
-            response = client.execute(get);
-            String responseString = EntityUtils.toString(response.getEntity());
-            Response r = DeserializeResponse.deserializeGivenString(responseString);
-            for (Member m : r.getResponse().getMembers()) {
-                mentionables.put(m.getNickname(), m.getUserId());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            get.reset();
+        Request request = new Request.Builder()
+                .url(initialUrl)
+                .build();
+        okhttp3.Response httpResponse = Bot.client.newCall(request).execute();
+        Response r = SerializerDeserializer.deserializeResponseGivenString(httpResponse.body().string());
+        for (Member m : r.getResponse().getMembers()) {
+            mentionables.put(m.getNickname(), m.getUserId());
         }
         return mentionables;
     }
