@@ -5,7 +5,11 @@ import io.banditoz.gmecord.api.GroupmeMessage;
 import io.banditoz.gmecord.api.Response;
 
 public class SerializerDeserializer {
-    private static Gson gson = new Gson();
+    private static Gson gson;
+
+    static {
+        gson = new Gson();
+    }
 
     public static GroupmeMessage deserializeMessageGivenString(String json) throws NullPointerException {
         GroupmeMessage message = gson.fromJson(json, GroupmeMessage.class);
