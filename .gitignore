@@ -22,6 +22,34 @@ cmake-build-*/
 # IntelliJ
 out/
 
+# Vim
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+
+# Auto-generated tag files
+tags
+
+# Persistent undo
+[._]*.un~
+
+# Eclipse JDT Language Server
+.metadata/
+.settings/
+jdt.ls-java-project/
+
+# End Vim
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
