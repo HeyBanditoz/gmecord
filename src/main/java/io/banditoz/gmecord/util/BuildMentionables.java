@@ -10,16 +10,17 @@ import okhttp3.Request;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class BuildMentionables {
-    public static HashMap<String, String> buildGroupmeMentionables() throws Exception {
+    public static HashMap<String, String> buildGroupmeMentionables() throws IOException {
         HashMap<String, String> mentionables = new HashMap<>();
         String initialUrl = "https://api.groupme.com/v3/groups/" + SettingsManager.getInstance().getSettings().getGroupID() + "?token=" + SettingsManager.getInstance().getSettings().getGroupMeToken();
         Request request = new Request.Builder()
                 .url(initialUrl)
                 .build();
         okhttp3.Response httpResponse = Bot.client.newCall(request).execute();
-        Response r = SerializerDeserializer.deserializeResponseGivenString(httpResponse.body().string());
+        Response r = SerializerDeserializer.deserializeResponseGivenString(Objects.requireNonNull(httpResponse.body()).string());
         for (Member m : r.getResponse().getMembers()) {
             mentionables.put(m.getNickname(), m.getUserId());
         }
