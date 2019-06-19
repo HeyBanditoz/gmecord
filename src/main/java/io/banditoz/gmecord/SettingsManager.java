@@ -77,6 +77,7 @@ public class SettingsManager {
         defaultSettings.setWebAuthenticationEnabled(true);
         defaultSettings.setBotName("Put bot username here (so it doesn't respond to its own messages.)");
         defaultSettings.setGroupID("The Groupme group ID we are in");
+        defaultSettings.setPtpbEndpoint("Ptpb instance to upload long messages to. If not configured, it will just show a \"message was too long\" message.");
         return defaultSettings;
     }
 }

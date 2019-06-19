@@ -12,9 +12,8 @@ public class BuildAttachments {
     public static StringBuilder buildImageAttachments(MessageReceivedEvent e) {
         StringBuilder attachments = new StringBuilder();
         for (Message.Attachment a : e.getMessage().getAttachments()) {
-            attachments.append("<ATTACHMENT> ");
+            attachments.append(" <ATTACHMENT> ");
             attachments.append(URI.create(a.getUrl()));
-            attachments.append(" ");
         }
         return attachments;
     }
