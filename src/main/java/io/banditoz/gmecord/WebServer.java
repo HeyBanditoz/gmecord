@@ -4,9 +4,11 @@ import com.qmetric.spark.authentication.AuthenticationDetails;
 import com.qmetric.spark.authentication.BasicAuthenticationFilter;
 import io.banditoz.gmecord.api.GroupmeMessage;
 import io.banditoz.gmecord.util.SerializerDeserializer;
+import org.eclipse.jetty.server.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Spark;
+
 public class WebServer extends Thread {
     public void run() {
         Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
@@ -34,8 +36,12 @@ public class WebServer extends Thread {
                 creator.build();
                 new DiscordMessageSender(creator.createMessage()).sendMessageToDiscord();
                 logger.error("Exception on message post! Discord notified. ", e);
+                res.status(Response.SC_INTERNAL_SERVER_ERROR);
+                return "500 Internal Server Error\n";
+
             }
-            return "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Pac_Man.svg/800px-Pac_Man.svg.png";
+            res.status(Response.SC_OK);
+            return "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Pac_Man.svg/800px-Pac_Man.svg.png\n";
         });
     }
 }
