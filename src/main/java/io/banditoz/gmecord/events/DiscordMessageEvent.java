@@ -47,7 +47,7 @@ public class DiscordMessageEvent extends ListenerAdapter {
                         .error("Exception thrown! Letting Discord know their message will not be delivered...", ex);
                 DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, your message " +
                         "was greater than 965 characters, and the configured ptpb instance is not working! Therefore, your message" +
-                        " will not be delivered over the bridge. Exception: `" + ex.getMessage() + "`", true);
+                        " will not be delivered over the bridge. Exception: `" + ex + "`", true);
                 creator.build();
                 new DiscordMessageSender(creator.createMessage()).sendMessageToDiscord();
             }
