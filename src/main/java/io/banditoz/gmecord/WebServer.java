@@ -23,7 +23,7 @@ public class WebServer extends Thread {
         }
         Spark.post("/msg/", (req, res) -> {
             try {
-                res.type("application/json");
+                res.type("text/plain");
                 GroupmeMessage message = SerializerDeserializer.deserializeMessageGivenString(req.body());
                 if (logger.isDebugEnabled())
                     logger.debug("Message inbound from Groupme: " + message + " Raw body: " + req.body());
@@ -38,7 +38,6 @@ public class WebServer extends Thread {
                 logger.error("Exception on message post! Discord notified. ", e);
                 res.status(Response.SC_INTERNAL_SERVER_ERROR);
                 return "500 Internal Server Error\n";
-
             }
             res.status(Response.SC_OK);
             return "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Pac_Man.svg/800px-Pac_Man.svg.png\n";
