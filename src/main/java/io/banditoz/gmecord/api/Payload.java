@@ -3,8 +3,29 @@ package io.banditoz.gmecord.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ImagePayload {
+public class Payload {
+    @SerializedName("payload")
+    @Expose
+    private ImagePayload imagePayload;
 
+    public String getUrl() {
+        return imagePayload.getUrl();
+    }
+
+    public void setUrl(String url) {
+        imagePayload.setUrl(url);
+    }
+
+    public String getPictureUrl() {
+        return imagePayload.getPictureUrl();
+    }
+
+    public void setPictureUrl(String url) {
+        imagePayload.setPictureUrl(url);
+    }
+}
+
+class ImagePayload {
     @SerializedName("url")
     @Expose
     private String url;
@@ -27,5 +48,4 @@ public class ImagePayload {
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
     }
-
 }

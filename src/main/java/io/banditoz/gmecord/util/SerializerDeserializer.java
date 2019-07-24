@@ -2,6 +2,7 @@ package io.banditoz.gmecord.util;
 
 import com.google.gson.Gson;
 import io.banditoz.gmecord.api.GroupmeMessage;
+import io.banditoz.gmecord.api.Payload;
 import io.banditoz.gmecord.api.Response;
 
 public class SerializerDeserializer {
@@ -25,5 +26,13 @@ public class SerializerDeserializer {
             throw new NullPointerException("The response body is null!");
         }
         return response;
+    }
+
+    public static Payload deserializeImageGivenString(String json) throws NullPointerException {
+        Payload payload = gson.fromJson(json, Payload.class);
+        if (payload.getPictureUrl() == null) {
+            throw new NullPointerException("There is no image URL here!");
+        }
+        return payload;
     }
 }

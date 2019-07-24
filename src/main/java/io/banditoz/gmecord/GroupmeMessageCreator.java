@@ -25,6 +25,18 @@ public class GroupmeMessageCreator {
         initialAttachments = new ArrayList<>();
     }
 
+    public GroupmeMessageCreator(String initialMessage, boolean isSystemMessage, ArrayList<Attachment> attachments) {
+        if (isSystemMessage) {
+            this.initialMessage = new StringBuilder(initialMessage);
+            this.initialMessage.insert(0, "<SYSTEM MESSAGE> ");
+        }
+        else {
+            this.initialMessage = new StringBuilder(initialMessage);
+        }
+        message = new BotMessage();
+        initialAttachments = attachments;
+    }
+
     /**
      * Builds the BotMessage.
      */

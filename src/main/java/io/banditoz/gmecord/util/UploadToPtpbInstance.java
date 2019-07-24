@@ -20,7 +20,7 @@ public class UploadToPtpbInstance {
      * @throws IOException If the request fails for some reason.
      */
     public static String uploadToPtpb(String message) throws IOException, ServiceUnavailableException {
-        Response response = null;
+        Response response;
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("c", message)
