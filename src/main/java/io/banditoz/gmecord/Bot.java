@@ -4,6 +4,7 @@ import io.banditoz.gmecord.events.DiscordMessageEvent;
 import io.banditoz.gmecord.util.BuildMentionables;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
 import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,7 @@ public class Bot {
         ws.setName("WebServer");
 
         // TODO: Fix the race condition here. If a message is sent and it hasn't gotten the mentionables, it will NPE.
-        Timer timer = new Timer();
+        Timer mentionablesTimer = new Timer();
         TimerTask rebuildMentionables = new TimerTask() {
             @Override
             public void run() {
@@ -47,7 +48,18 @@ public class Bot {
                 }
             }
         };
-        timer.schedule(rebuildMentionables, 0L, TimeUnit.HOURS.toMillis(1));
+        mentionablesTimer.schedule(rebuildMentionables, 0L, TimeUnit.HOURS.toMillis(1));
+
+        Timer pingMeasurementTimer = new Timer();
+        TimerTask getPings = new TimerTask() {
+            @Override
+            public void run() {
+                long responseTime = jda.getPing();
+                Game game = Game.playing(responseTime + " ms.");
+                jda.getPresence().setGame(game);
+            }
+        };
+        pingMeasurementTimer.schedule(getPings, 0L, TimeUnit.MINUTES.toMillis(1));
     }
 
     public static JDA getJda() {
