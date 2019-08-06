@@ -2,6 +2,7 @@ package io.banditoz.gmecord;
 
 import com.google.gson.Gson;
 import io.banditoz.gmecord.api.BotMessage;
+import io.banditoz.gmecord.util.SerializerDeserializer;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class GroupmeMessageSender {
         String json;
         String botID = settings.getBotID();
         message.setBotId(botID);
-        json = new Gson().toJson(message);
+        json = SerializerDeserializer.serializeMessage(message);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url("https://api.groupme.com/v3/bots/post")

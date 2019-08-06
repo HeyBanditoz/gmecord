@@ -1,6 +1,7 @@
 package io.banditoz.gmecord.util;
 
 import com.google.gson.Gson;
+import io.banditoz.gmecord.api.BotMessage;
 import io.banditoz.gmecord.api.GroupmeMessage;
 import io.banditoz.gmecord.api.Payload;
 import io.banditoz.gmecord.api.Response;
@@ -34,5 +35,9 @@ public class SerializerDeserializer {
             throw new NullPointerException("There is no image URL here!");
         }
         return payload;
+    }
+
+    public static String serializeMessage(BotMessage message) {
+        return gson.toJson(message);
     }
 }
