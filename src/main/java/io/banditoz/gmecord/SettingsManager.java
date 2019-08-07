@@ -44,7 +44,6 @@ public class SettingsManager {
             BufferedReader reader = Files.newBufferedReader(configFile, StandardCharsets.UTF_8);
             this.Settings = gson.fromJson(reader, Settings.class);
             reader.close();
-            System.out.println("SettingsManager: Settings loaded");
             LoggerFactory.getLogger(this.getClass().getCanonicalName()).info("Settings loaded.");
         } catch (Exception e) {
             LoggerFactory.getLogger(this.getClass().getCanonicalName()).error("Error loading settings.", e);
