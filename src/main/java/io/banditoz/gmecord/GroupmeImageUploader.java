@@ -6,6 +6,7 @@ import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -48,6 +49,8 @@ public class GroupmeImageUploader {
             image = SerializerDeserializer.deserializeImageGivenString(responseBody);
         } catch (IOException e) {
             logger.error("Error while uploading image!", e);
+        } finally {
+            response.close();
         }
         return image.getPictureUrl();
     }
