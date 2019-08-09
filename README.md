@@ -19,11 +19,12 @@ The configuration of the bot must be in the same directory as the jar file, and 
 * `groupMeToken`: Your personal Groupme token. This is needed to let Discord mention Groupme users.
 * `botID`: The ID of the Groupme bot. Allows for sending messages to Groupme.
 * `channel`: The Discord channel we should listen for messages on.
-* `webAuthenticationEnabled`: If you would like basic HTTP authentication, enable it here. It's recommended you set up a reverse proxy (nginx or Apache fit this bill fine) and do authentication there.
+* `webAuthenticationEnabled`: If you would like basic HTTP authentication, enable it here. It's recommended you set up a reverse proxy (nginx or Apache fit this bill fine) and instead do authentication there.
 * `username`: The username for web authentication.
 * `password`: The password for web authentication.
 * `botName`: The name of the bot on Groupme, so messages sent from Discord aren't sent back.
 * `groupID`: The ID of the Groupme group. This is needed to let Discord mention Groupme users.
+* `port`: The port the webserver that handles incoming Groupme messages listens on.
 
 ## Builds
 Builds should be posted to [Jenkins.](https://jenkins.banditoz.io/job/gmecord/)

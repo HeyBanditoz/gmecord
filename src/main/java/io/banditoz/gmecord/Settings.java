@@ -10,6 +10,7 @@ public class Settings {
     private String password;
     private String botName;
     private String groupID;
+    private int port;
 
     public String getDiscordToken() {
         return discordToken;
@@ -81,5 +82,13 @@ public class Settings {
 
     public void setGroupID(String groupID) {
         this.groupID = groupID;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 }

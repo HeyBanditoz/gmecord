@@ -76,6 +76,7 @@ public class SettingsManager {
         defaultSettings.setWebAuthenticationEnabled(true);
         defaultSettings.setBotName("Put bot username here (so it doesn't respond to its own messages.)");
         defaultSettings.setGroupID("The Groupme group ID we are in");
+        defaultSettings.setPort(4567);
         return defaultSettings;
     }
 }

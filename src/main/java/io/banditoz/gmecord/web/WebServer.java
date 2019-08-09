@@ -16,9 +16,9 @@ public class WebServer extends Thread {
     private Logger logger;
 
     public void run() {
-        Javalin webServer = Javalin.create().start(4567);
         logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
         Settings settings = SettingsManager.getInstance().getSettings();
+        Javalin webServer = Javalin.create().start(settings.getPort());
 
         if (settings.isWebAuthenticationEnabled()) {
             logger.info("Authentication is enabled.");
