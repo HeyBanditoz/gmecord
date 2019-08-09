@@ -2,6 +2,7 @@ package io.banditoz.gmecord;
 
 import io.banditoz.gmecord.events.DiscordMessageEvent;
 import io.banditoz.gmecord.util.BuildMentionables;
+import io.banditoz.gmecord.web.WebServer;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;

@@ -18,9 +18,6 @@ public class SerializerDeserializer {
 
     public static GroupmeMessage deserializeMessageGivenString(String json) throws NullPointerException {
         GroupmeMessage message = gson.fromJson(json, GroupmeMessage.class);
-        if (message.getName() == null || message.getText() == null) {
-            throw new NullPointerException("Either GroupmeMessage.getName() or GroupmeMessage.getText() is null! This should not be a valid message!");
-        }
         return message;
     }
 
