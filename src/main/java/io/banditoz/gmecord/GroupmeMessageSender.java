@@ -1,6 +1,5 @@
 package io.banditoz.gmecord;
 
-import com.google.gson.Gson;
 import io.banditoz.gmecord.api.BotMessage;
 import io.banditoz.gmecord.util.SerializerDeserializer;
 import okhttp3.*;

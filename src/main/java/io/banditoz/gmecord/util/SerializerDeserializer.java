@@ -10,15 +10,14 @@ import io.banditoz.gmecord.paste.Paste;
 import io.banditoz.gmecord.paste.PasteResponse;
 
 public class SerializerDeserializer {
-    private static Gson gson;
+    private static final Gson gson;
 
     static {
         gson = new GsonBuilder().serializeNulls().create();
     }
 
     public static GroupmeMessage deserializeMessageGivenString(String json) throws NullPointerException {
-        GroupmeMessage message = gson.fromJson(json, GroupmeMessage.class);
-        return message;
+        return gson.fromJson(json, GroupmeMessage.class);
     }
 
     public static Response deserializeResponseGivenString(String json) throws NullPointerException {

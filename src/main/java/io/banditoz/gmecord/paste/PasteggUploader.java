@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 public class PasteggUploader {
-    private Paste paste;
+    private final Paste paste;
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private final Logger logger;
 

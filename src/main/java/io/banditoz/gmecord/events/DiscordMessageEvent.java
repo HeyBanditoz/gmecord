@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 public class DiscordMessageEvent extends ListenerAdapter {
-    private Logger logger;
+    private final Logger logger;
     public DiscordMessageEvent() {
         logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
     }
