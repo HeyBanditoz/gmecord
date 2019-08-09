@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class DiscordMessageEvent extends ListenerAdapter {
     private final Logger logger;
     public DiscordMessageEvent() {
-        logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+        logger = LoggerFactory.getLogger(DiscordMessageEvent.class);
     }
 
     @Override

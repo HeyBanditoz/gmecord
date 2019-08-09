@@ -15,7 +15,7 @@ public class PasteggUploader {
 
     public PasteggUploader(Paste paste) {
         this.paste = paste;
-        logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+        logger = LoggerFactory.getLogger(PasteggUploader.class);
     }
 
     /**

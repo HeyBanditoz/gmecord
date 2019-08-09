@@ -13,10 +13,9 @@ import java.util.Objects;
 public class WebServer extends Thread {
     private String username;
     private String password;
-    private Logger logger;
 
     public void run() {
-        logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+        Logger logger = LoggerFactory.getLogger(WebServer.class);
         Settings settings = SettingsManager.getInstance().getSettings();
         Javalin webServer = Javalin.create().start(settings.getPort());
 

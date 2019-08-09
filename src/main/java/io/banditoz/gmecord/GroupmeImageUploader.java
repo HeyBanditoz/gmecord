@@ -16,7 +16,7 @@ public class GroupmeImageUploader {
 
     public GroupmeImageUploader() {
         client = new OkHttpClient();
-        logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+        logger = LoggerFactory.getLogger(GroupmeImageUploader.class);
     }
 
     /**

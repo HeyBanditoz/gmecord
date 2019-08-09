@@ -18,7 +18,7 @@ public class GroupmeMessageSender {
      * @param message The BotMessage to send,
      */
     public GroupmeMessageSender(BotMessage message) {
-        logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+        logger = LoggerFactory.getLogger(GroupmeMessageSender.class);
         settings = SettingsManager.getInstance().getSettings();
         this.message = message;
     }

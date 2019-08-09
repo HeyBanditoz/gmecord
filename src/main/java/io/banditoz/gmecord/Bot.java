@@ -23,7 +23,7 @@ public class Bot {
     public static final OkHttpClient client = new OkHttpClient(); // should this be public? oh well!
 
     public Bot() throws LoginException, InterruptedException {
-        Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+        Logger logger = LoggerFactory.getLogger(Bot.class);
         Settings settings = SettingsManager.getInstance().getSettings();
         jda = new JDABuilder(settings.getDiscordToken()).build();
         jda.awaitReady();

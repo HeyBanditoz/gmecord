@@ -19,6 +19,7 @@ public class SettingsManager {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private Settings Settings;
     private final Path configFile = new File(".").toPath().resolve("Config.json");
+    private final Logger logger = LoggerFactory.getLogger(SettingsManager.class);
 
     public static SettingsManager getInstance() {
         if (instance == null) {
@@ -28,7 +29,6 @@ public class SettingsManager {
     }
 
     public SettingsManager() {
-        Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
         if (!configFile.toFile().exists()) {
             logger.info("Creating default settings.");
             logger.info("You will need to edit the Config.json with your login information.");
@@ -44,9 +44,9 @@ public class SettingsManager {
             BufferedReader reader = Files.newBufferedReader(configFile, StandardCharsets.UTF_8);
             this.Settings = gson.fromJson(reader, Settings.class);
             reader.close();
-            LoggerFactory.getLogger(this.getClass().getCanonicalName()).info("Settings loaded.");
+            logger.info("Settings loaded.");
         } catch (Exception e) {
-            LoggerFactory.getLogger(this.getClass().getCanonicalName()).error("Error loading settings.", e);
+            logger.error("Error loading settings.", e);
         }
     }
 
