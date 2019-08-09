@@ -37,7 +37,7 @@ public class DiscordMessageEvent extends ListenerAdapter {
                     message += BuildAttachments.buildOtherAttachments(e).toString();
                 } catch (Exception ex) {
                     logger.error("Exception on building attachments!", ex);
-                    DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">," +
+                    DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, " +
                             "there was an error while building the attachments." +
                             " Exception: `" + ex + "`", true);
                     creator.build();
