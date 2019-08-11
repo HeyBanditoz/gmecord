@@ -1,6 +1,6 @@
 # Gmecord
 
-Gmecord is a simple Discord bot/Spark webserver that connects a Discord channel and a Groupme chat. 
+Gmecord is a simple Discord bot/Javalin webserver that connects a Discord channel and a Groupme chat.
 
 ## What's working
 * The following Groupme attachment types will be parsed to Discord:
