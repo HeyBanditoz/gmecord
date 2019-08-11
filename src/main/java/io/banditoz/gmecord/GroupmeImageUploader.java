@@ -11,11 +11,9 @@ import java.io.InputStream;
 import java.util.Objects;
 
 public class GroupmeImageUploader {
-    private final OkHttpClient client;
     private final Logger logger;
 
     public GroupmeImageUploader() {
-        client = new OkHttpClient();
         logger = LoggerFactory.getLogger(GroupmeImageUploader.class);
     }
 
@@ -31,7 +29,7 @@ public class GroupmeImageUploader {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        Response response = client.newCall(request).execute();
+        Response response = Bot.client.newCall(request).execute();
         InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), inputStream.readAllBytes());
         request = new Request.Builder()
@@ -43,7 +41,7 @@ public class GroupmeImageUploader {
         Payload image = null;
         inputStream.close();
         try {
-            response = client.newCall(request).execute();
+            response = Bot.client.newCall(request).execute();
             String responseBody = Objects.requireNonNull(response.body()).string();
             image = SerializerDeserializer.deserializeImageGivenString(responseBody);
         } catch (IOException e) {
