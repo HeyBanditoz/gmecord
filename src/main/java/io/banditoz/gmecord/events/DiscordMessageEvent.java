@@ -5,8 +5,8 @@ import io.banditoz.gmecord.api.Attachment;
 import io.banditoz.gmecord.paste.Paste;
 import io.banditoz.gmecord.paste.PasteggUploader;
 import io.banditoz.gmecord.util.BuildAttachments;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

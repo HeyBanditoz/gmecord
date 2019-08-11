@@ -4,7 +4,7 @@ import io.banditoz.gmecord.Bot;
 import io.banditoz.gmecord.SettingsManager;
 import io.banditoz.gmecord.api.Member;
 import io.banditoz.gmecord.api.Response;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.User;
 import okhttp3.Request;
 
 import java.io.IOException;
@@ -28,9 +28,9 @@ public class BuildMentionables {
     }
 
     public static HashMap<String, String> buildDiscordMentionables() {
-        List<net.dv8tion.jda.core.entities.Member> members = Bot.getJda().getTextChannelById(SettingsManager.getInstance().getSettings().getChannel()).getGuild().getMembers();
+        List<net.dv8tion.jda.api.entities.Member> members = Bot.getJda().getTextChannelById(SettingsManager.getInstance().getSettings().getChannel()).getGuild().getMembers();
         HashMap<String, String> mentionables = new HashMap<>();
-        for (net.dv8tion.jda.core.entities.Member member : members) {
+        for (net.dv8tion.jda.api.entities.Member member : members) {
             User u = member.getUser();
             mentionables.put(u.getName(), u.getId());
         }

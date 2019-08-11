@@ -3,9 +3,9 @@ package io.banditoz.gmecord;
 import io.banditoz.gmecord.events.DiscordMessageEvent;
 import io.banditoz.gmecord.util.BuildMentionables;
 import io.banditoz.gmecord.web.WebServer;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,9 +55,9 @@ public class Bot {
         TimerTask getPings = new TimerTask() {
             @Override
             public void run() {
-                long responseTime = jda.getPing();
-                Game game = Game.playing(responseTime + " ms.");
-                jda.getPresence().setGame(game);
+                long responseTime = jda.getGatewayPing();
+                Activity activity = Activity.playing(responseTime + " ms.");
+                jda.getPresence().setActivity(activity);
             }
         };
         pingMeasurementTimer.schedule(getPings, 0L, TimeUnit.MINUTES.toMillis(1));
