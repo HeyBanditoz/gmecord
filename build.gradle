@@ -26,7 +26,7 @@ repositories {
 
 dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-    compile group: 'io.javalin', name:'javalin', version:'3.3.0'
+    compile group: 'io.javalin', name:'javalin', version:'3.4.1'
     compile ('net.dv8tion:JDA:4.0.0_39') {
         exclude module: 'opus-java'
     }
