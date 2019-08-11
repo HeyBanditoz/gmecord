@@ -56,7 +56,10 @@ public class Bot {
             @Override
             public void run() {
                 long responseTime = jda.getGatewayPing();
-                Activity activity = Activity.playing(responseTime + " ms.");
+                Runtime runtime = Runtime.getRuntime();
+                long memUsed = (runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024);
+                long memTotal = runtime.totalMemory() / (1024 * 1024);
+                Activity activity = Activity.playing(responseTime + " ms - " + memUsed + " MB / " + memTotal + " MB");
                 jda.getPresence().setActivity(activity);
             }
         };
