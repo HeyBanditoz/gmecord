@@ -1,0 +1,20 @@
+[Unit]
+Description=Groupme Bridge
+After=network.target apache2.service # I use apache as a reverse proxy, you could remove/change it otherwise
+
+[Service]
+User=gmecord
+Group=gmecord
+ProtectSystem=full
+PrivateTmp=true
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+# You will need to modify this line to match where the gmecord jar is located. Needs to be able to at least read Config.json
+WorkingDirectory=/opt/gmecord
+# You will need to modify this line to match where your JVM is installed (or just do java)
+ExecStart=/usr/lib/jvm/adoptopenjdk-11-jdk-openj9/bin/java -Xmx64M -jar io.banditoz.gmecord-all.jar 
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
