@@ -1,6 +1,7 @@
 package io.banditoz.gmecord;
 
 import io.banditoz.gmecord.api.GroupmeMessage;
+import io.banditoz.gmecord.util.MarkdownUtils;
 
 import java.util.HashMap;
 
@@ -12,11 +13,16 @@ public class DiscordMessageCreator {
     public DiscordMessageCreator(GroupmeMessage msg, boolean isSystemMessage) {
         this.message = msg;
         if (isSystemMessage) {
-            formattedName = "**<SYSTEM MESSAGE> <" + msg.getName() + ">** ";
+            formattedName = "<SYSTEM MESSAGE> <" + msg.getName() + ">";
         }
         else {
-            formattedName = "**<" + msg.getName() + ">** ";
+            formattedName = "<" + msg.getName() + ">";
         }
+        // Escape Discord's markdown so the message can't get messed up unintentionally
+        formattedName = MarkdownUtils.escapeMarkdownCharacters(formattedName);
+
+        // Then bold their name so it looks nicer
+        formattedName = "**" + formattedName + "** ";
     }
 
     public DiscordMessageCreator(String msg, boolean isSystemMessage) {
