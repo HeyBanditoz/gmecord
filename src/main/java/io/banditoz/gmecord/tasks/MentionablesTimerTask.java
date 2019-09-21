@@ -15,7 +15,7 @@ public class MentionablesTimerTask extends TimerTask {
             long before = System.nanoTime();
             Bot.setMentionableGroupme(BuildMentionables.buildGroupmeMentionables());
             Bot.setMentionableDiscord(BuildMentionables.buildDiscordMentionables());
-            logger.info("Mentionables built." + " (Took " + (System.nanoTime() - before) / 1000000 + " ms.)");
+            logger.debug("Mentionables built." + " (Took " + (System.nanoTime() - before) / 1000000 + " ms.)");
         }
         catch (Exception ex) {
             logger.error("Exception in building mentionables!", ex);
