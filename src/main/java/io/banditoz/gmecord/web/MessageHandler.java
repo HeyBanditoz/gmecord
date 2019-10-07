@@ -2,6 +2,7 @@ package io.banditoz.gmecord.web;
 
 import io.banditoz.gmecord.DiscordMessageCreator;
 import io.banditoz.gmecord.DiscordMessageSender;
+import io.banditoz.gmecord.SettingsManager;
 import io.banditoz.gmecord.api.GroupmeMessage;
 import io.banditoz.gmecord.util.SerializerDeserializer;
 import io.javalin.http.Context;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MessageHandler {
+    public static String lastUser;
     public static void handle(Context ctx) {
         Logger logger = LoggerFactory.getLogger(MessageHandler.class);
         try {
@@ -23,6 +25,10 @@ public class MessageHandler {
             }
             if (logger.isDebugEnabled()) {
                 logger.debug("Message inbound... Message: " +  message + " Raw body: " + ctx.body());
+            }
+            if (!message.getName().equals(SettingsManager.getInstance().getSettings().getBotName())) {
+                lastUser = message.getName();
+                logger.debug("Setting last user to " + lastUser);
             }
             DiscordMessageCreator creator = new DiscordMessageCreator(message, message.getSystem());
             creator.build();

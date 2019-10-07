@@ -2,6 +2,7 @@ package io.banditoz.gmecord;
 
 import io.banditoz.gmecord.api.Attachment;
 import io.banditoz.gmecord.api.BotMessage;
+import io.banditoz.gmecord.web.MessageHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,10 @@ public class GroupmeMessageCreator {
         Attachment a = new Attachment();
         List<String> userIdList = new ArrayList<>();
         List<List<Integer>> lociList = new ArrayList<>();
+        if (initialMessage.toString().contains("@GroupmeBridge")) {
+            initialMessage = new StringBuilder(initialMessage.toString()
+                    .replace("@GroupmeBridge", "@" + MessageHandler.lastUser)); // if someone pings the bridge, ping the last user other than the bot
+        }
             for (String k : Bot.getMentionableGroupme().keySet()) {
             if (initialMessage.toString().contains("@" + k)) {
                 if (!found) {
