@@ -7,6 +7,7 @@ import io.banditoz.gmecord.web.WebServer;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import okhttp3.OkHttpClient;
+import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
 import java.util.HashMap;
@@ -35,6 +36,8 @@ public class Bot {
 
         Timer pingMeasurementTimer = new Timer();
         pingMeasurementTimer.schedule(new ActivityTimerTask(), 0L, TimeUnit.MINUTES.toMillis(1));
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> LoggerFactory.getLogger(getClass()).info("Bot is now shutting down.")));
     }
 
     public static JDA getJda() {
