@@ -7,12 +7,11 @@ User=gmecord
 Group=gmecord
 ProtectSystem=full
 PrivateTmp=true
-ProtectHome=true
 ProtectKernelTunables=true
 ProtectControlGroups=true
 # You will need to modify this line to match where the gmecord jar is located. Needs to be able to at least read Config.json
 WorkingDirectory=/opt/gmecord
-# You will need to modify this line to match where your JVM is installed (or just do java)
+# You will need to modify this line to match where your JVM is installed
 ExecStart=/usr/lib/jvm/adoptopenjdk-11-jdk-openj9/bin/java -Xmx64M -jar io.banditoz.gmecord-all.jar 
 Restart=always
 
