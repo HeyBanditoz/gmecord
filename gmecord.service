@@ -7,6 +7,8 @@ User=gmecord
 Group=gmecord
 ProtectSystem=full
 PrivateTmp=true
+# Remove ProtectHome if the jar is located in the home directory
+ProtectHome=true
 ProtectKernelTunables=true
 ProtectControlGroups=true
 # You will need to modify this line to match where the gmecord jar is located. Needs to be able to at least read Config.json
