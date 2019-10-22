@@ -23,9 +23,7 @@ public class MessageHandler {
                 ctx.result("400 Bad Request\n");
                 return;
             }
-            if (logger.isDebugEnabled()) {
-                logger.debug("Message inbound... Message: " +  message + " Raw body: " + ctx.body());
-            }
+            logger.debug("Message inbound... Message: " +  message + " Raw body: " + ctx.body());
             if (!message.getName().equals(SettingsManager.getInstance().getSettings().getBotName())) {
                 lastUser = message.getName();
                 logger.debug("Setting last user to " + lastUser);
