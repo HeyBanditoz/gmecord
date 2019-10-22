@@ -29,10 +29,14 @@ public class WebServer extends Thread {
 
         webServer.post("/msg/", ctx -> {
             if (settings.isWebAuthenticationEnabled()) {
-                if (authenticate(ctx.basicAuthCredentials())) {
-                    MessageHandler.handle(ctx);
-                }
-                else {
+                try {
+                    if (authenticate(ctx.basicAuthCredentials())) {
+                        MessageHandler.handle(ctx);
+                    } else {
+                        ctx.status(Response.SC_UNAUTHORIZED);
+                        ctx.result("401 Unauthorized\n");
+                    }
+                } catch (IllegalArgumentException ex) {
                     ctx.status(Response.SC_UNAUTHORIZED);
                     ctx.result("401 Unauthorized\n");
                 }
@@ -44,9 +48,6 @@ public class WebServer extends Thread {
     }
 
     private boolean authenticate(BasicAuthCredentials creds) {
-        if (Objects.isNull(creds)) {
-            return false;
-        }
         return creds.getUsername().equals(username) && creds.getPassword().equals(password);
     }
 }
