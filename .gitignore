@@ -73,6 +73,3 @@ fabric.properties
 
 # Profiler
 .attach*
-
-# Ignore the debug log
-debug_log.txt
