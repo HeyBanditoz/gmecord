@@ -29,7 +29,7 @@ public class GroupmeImageUploader {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        Response response = Bot.client.newCall(request).execute();
+        Response response = Bot.getOkHttpClient().newCall(request).execute();
         InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), inputStream.readAllBytes());
         request = new Request.Builder()
@@ -41,7 +41,7 @@ public class GroupmeImageUploader {
         Payload image = null;
         inputStream.close();
         try {
-            response = Bot.client.newCall(request).execute();
+            response = Bot.getOkHttpClient().newCall(request).execute();
             String responseBody = Objects.requireNonNull(response.body()).string();
             image = SerializerDeserializer.deserializeImageGivenString(responseBody);
         } catch (IOException e) {

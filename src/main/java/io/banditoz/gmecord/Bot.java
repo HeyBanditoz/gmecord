@@ -18,7 +18,6 @@ public class Bot {
     private static JDA jda;
     private static HashMap<String, String> mentionableGroupme;
     private static HashMap<String, String> mentionableDiscord;
-    public static final OkHttpClient client = new OkHttpClient(); // should this be public? oh well!
 
     public Bot() throws LoginException, InterruptedException {
         Settings settings = SettingsManager.getInstance().getSettings();
@@ -58,5 +57,9 @@ public class Bot {
 
     public static void setMentionableDiscord(HashMap<String, String> mentionableDiscord) {
         Bot.mentionableDiscord = mentionableDiscord;
+    }
+
+    public static OkHttpClient getOkHttpClient() {
+        return jda.getHttpClient();
     }
 }

@@ -32,7 +32,7 @@ public class PasteggUploader {
                 .post(body)
                 .build();
 
-        response = Bot.client.newCall(request).execute();
+        response = Bot.getOkHttpClient().newCall(request).execute();
         responseString = response.body().string();
         logger.debug("Response string: " + responseString);
         return buildUrl(SerializerDeserializer.deserializePasteResponseGivenString(responseString));

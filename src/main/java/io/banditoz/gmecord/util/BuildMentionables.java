@@ -19,7 +19,7 @@ public class BuildMentionables {
         Request request = new Request.Builder()
                 .url(initialUrl)
                 .build();
-        okhttp3.Response httpResponse = Bot.client.newCall(request).execute();
+        okhttp3.Response httpResponse = Bot.getOkHttpClient().newCall(request).execute();
         Response r = SerializerDeserializer.deserializeResponseGivenString(Objects.requireNonNull(httpResponse.body()).string());
         for (Member m : r.getResponse().getMembers()) {
             mentionables.put(m.getNickname(), m.getUserId());
