@@ -19,10 +19,15 @@ public class Bot {
     private static HashMap<String, String> mentionableGroupme;
     private static HashMap<String, String> mentionableDiscord;
 
-    public Bot() throws LoginException, InterruptedException {
+    public Bot() {
         Settings settings = SettingsManager.getInstance().getSettings();
-        jda = new JDABuilder(settings.getDiscordToken()).build();
-        jda.awaitReady();
+        try {
+            jda = new JDABuilder(settings.getDiscordToken()).build();
+            jda.awaitReady();
+        } catch (Exception ex) {
+            LoggerFactory.getLogger(Bot.class).error("Could not login! Exiting safely...", ex);
+            System.exit(1);
+        }
         jda.addEventListener(new DiscordMessageEvent());
         WebServer ws = new WebServer();
 
