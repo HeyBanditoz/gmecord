@@ -4,8 +4,7 @@ import io.banditoz.gmecord.api.Attachment;
 import io.banditoz.gmecord.api.BotMessage;
 import io.banditoz.gmecord.web.MessageHandler;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,7 +74,19 @@ public class GroupmeMessageCreator {
             initialMessage = new StringBuilder(initialMessage.toString()
                     .replace("@GroupmeBridge", "@" + MessageHandler.lastUser)); // if someone pings the bridge, ping the last user other than the bot
         }
-            for (String k : Bot.getMentionableGroupme().keySet()) {
+        if (initialMessage.toString().contains("@everyone")) {
+            int start = initialMessage.indexOf("@everyone");
+            initialMessage = new StringBuilder(initialMessage.toString()
+                    .replace("@everyone", ""));
+            Iterator iterator = Bot.getMentionableGroupme().entrySet().iterator();
+            System.out.println(MessageHandler.lastUser);
+            while (iterator.hasNext()) {
+                Map.Entry mapElement = (Map.Entry)iterator.next();
+                initialMessage = new StringBuilder(initialMessage.substring(0, start) + "@" + mapElement.getKey() + " " +initialMessage.substring(start,initialMessage.length()));
+                start+=mapElement.getKey().toString().length()+2;
+            }
+        }
+        for (String k : Bot.getMentionableGroupme().keySet()) {
             if (initialMessage.toString().contains("@" + k)) {
                 if (!found) {
                     initialAttachments = new ArrayList<>();
