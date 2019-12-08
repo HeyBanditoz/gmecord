@@ -23,6 +23,8 @@ public class GroupmeMessageCreator {
         }
         message = new BotMessage();
         initialAttachments = new ArrayList<>();
+
+        build();
     }
 
     public GroupmeMessageCreator(String initialMessage, boolean isSystemMessage, ArrayList<Attachment> attachments) {
@@ -35,12 +37,14 @@ public class GroupmeMessageCreator {
         }
         message = new BotMessage();
         initialAttachments = attachments;
+
+        build();
     }
 
     /**
      * Builds the BotMessage.
      */
-    public void build() {
+    private void build() {
         sanitizeSpoilers();
         checkForMentionables();
         message.setAttachments(initialAttachments);

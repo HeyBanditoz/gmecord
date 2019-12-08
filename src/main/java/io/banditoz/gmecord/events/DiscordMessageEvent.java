@@ -31,8 +31,7 @@ public class DiscordMessageEvent extends ListenerAdapter {
                     if (attachments.size() > 1) {
                         DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, due to " +
                                 "a bug in Groupme, only your first image was sent.", true);
-                        creator.build();
-                        new DiscordMessageSender(creator.createMessage()).sendMessageToDiscord();
+                        DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
                     }
                     message += BuildAttachments.buildOtherAttachments(e).toString();
                 } catch (Exception ex) {
@@ -40,8 +39,7 @@ public class DiscordMessageEvent extends ListenerAdapter {
                     DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, " +
                             "there was an error while building the attachments." +
                             " Exception: `" + ex + "`", true);
-                    creator.build();
-                    new DiscordMessageSender(creator.createMessage()).sendMessageToDiscord();
+                    DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
                 }
             }
             if (message.length() > 965) {
@@ -49,29 +47,23 @@ public class DiscordMessageEvent extends ListenerAdapter {
             }
             else {
                 GroupmeMessageCreator gmeMessage = new GroupmeMessageCreator("<" + e.getAuthor().getName() + "> " + message, false, attachments);
-                gmeMessage.build();
-                new GroupmeMessageSender(gmeMessage.getMessage()).sendMessageToGroupMe();
+                GroupmeMessageSender.sendMessageToGroupMe(gmeMessage.getMessage());
             }
         }
     }
 
     private void messageIsTooLong(MessageReceivedEvent e, String message) {
-        String url;
-        GroupmeMessageCreator gmeMessage = new GroupmeMessageCreator("<" + e.getAuthor().getName() + "> " + message, false);
-        gmeMessage.build();
         try {
             Paste paste = new Paste("<" + e.getAuthor().getName() + "> " + message);
-            url = new PasteggUploader(paste).uploadToPastegg();
+            String url = new PasteggUploader(paste).uploadToPastegg();
             GroupmeMessageCreator sysMessage = new GroupmeMessageCreator("Message from user " + e.getAuthor().getName() + " is too long! Paste.gg link: " + url, true);
-            sysMessage.build();
-            new GroupmeMessageSender(sysMessage.getMessage()).sendMessageToGroupMe();
+            GroupmeMessageSender.sendMessageToGroupMe(sysMessage.getMessage());
         } catch (Exception ex) {
             logger.error("Exception thrown! Letting Discord know their message will not be delivered...", ex);
             DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, your message " +
                     "was greater than 965 characters, and paste.gg is not working! Therefore, your message" +
                     " will not be delivered over the bridge. Exception: `" + ex + "`", true);
-            creator.build();
-            new DiscordMessageSender(creator.createMessage()).sendMessageToDiscord();
+            DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
         }
     }
 }

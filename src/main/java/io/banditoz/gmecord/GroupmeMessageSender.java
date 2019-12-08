@@ -6,27 +6,15 @@ import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class GroupmeMessageSender {
-    private final BotMessage message;
-    private final Settings settings;
-    private final Logger logger;
+    private static final Settings settings = SettingsManager.getInstance().getSettings();
+    private static final Logger logger = LoggerFactory.getLogger(GroupmeMessageSender.class);
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-
-    /**
-     * Constructor with a BotMessage.
-     * @param message The BotMessage to send,
-     */
-    public GroupmeMessageSender(BotMessage message) {
-        logger = LoggerFactory.getLogger(GroupmeMessageSender.class);
-        settings = SettingsManager.getInstance().getSettings();
-        this.message = message;
-    }
 
     /**
      * Sends a message to GroupMe, building the attachment list and message.
      */
-    public void sendMessageToGroupMe() {
+    public static void sendMessageToGroupMe(BotMessage message) {
         String json;
         String botID = settings.getBotID();
         message.setBotId(botID);

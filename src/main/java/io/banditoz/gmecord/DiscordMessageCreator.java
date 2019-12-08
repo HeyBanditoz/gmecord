@@ -24,6 +24,8 @@ public class DiscordMessageCreator {
 
         // Then bold their name so it looks nicer
         formattedName = "**" + formattedName + "** ";
+
+        build();
     }
 
     public DiscordMessageCreator(String msg, boolean isSystemMessage) {
@@ -40,14 +42,14 @@ public class DiscordMessageCreator {
      * Gets the formatted message.
      * @return The formatted message.
      */
-    public String createMessage() {
+    public String getMessage() {
         return finalizedMessage.toString();
     }
 
     /**
      * Builds the formatted message.
      */
-    public void build() {
+    private void build() {
         if (message != null) {
             finalizedMessage = new StringBuilder(formattedName);
             if (message.getAttachments() != null && message.getAttachments().length != 0) {

@@ -28,13 +28,10 @@ public class MessageHandler {
                 lastUser = message.getName();
                 logger.debug("Setting last user to " + lastUser);
             }
-            DiscordMessageCreator creator = new DiscordMessageCreator(message, message.getSystem());
-            creator.build();
-            new DiscordMessageSender(creator.createMessage()).sendMessageToDiscord();
+            DiscordMessageSender.sendMessageToDiscord(new DiscordMessageCreator(message, message.getSystem()).getMessage());
         } catch (Exception e) {
             DiscordMessageCreator creator = new DiscordMessageCreator("Exception thrown on Javalin post! `" + e.toString() + "`", true);
-            creator.build();
-            new DiscordMessageSender(creator.createMessage()).sendMessageToDiscord();
+            DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
             logger.error("Exception on message post! Discord notified. ", e);
             ctx.status(Response.SC_INTERNAL_SERVER_ERROR);
             ctx.result("500 Internal Server Error\n");

@@ -29,9 +29,8 @@ public class Tests { // TODO: Write mentions test for Groupme.
 
         Bot.setMentionableDiscord(groupmeMentionables);
         DiscordMessageCreator message = new DiscordMessageCreator(gMessage, false);
-        message.build();
 
-        assertEquals(expected, message.createMessage());
+        assertEquals(expected, message.getMessage());
     }
 
     @Test public void locationAttachmentShouldBeBuiltCorrectly() {
@@ -52,8 +51,7 @@ public class Tests { // TODO: Write mentions test for Groupme.
         message1.setAttachments(attachments);
 
         DiscordMessageCreator creator = new DiscordMessageCreator(message1, false);
-        creator.build();
-        actual = creator.createMessage();
+        actual = creator.getMessage();
 
         assertEquals(expected, actual);
     }
@@ -74,8 +72,7 @@ public class Tests { // TODO: Write mentions test for Groupme.
         message1.setAttachments(attachments);
 
         DiscordMessageCreator creator = new DiscordMessageCreator(message1, false);
-        creator.build();
-        actual = creator.createMessage();
+        actual = creator.getMessage();
 
         assertEquals(expected, actual);
     }
@@ -86,7 +83,6 @@ public class Tests { // TODO: Write mentions test for Groupme.
 
         Bot.setMentionableGroupme(new HashMap<>());
         GroupmeMessageCreator creator = new GroupmeMessageCreator(expected, false);
-        creator.build();
         actual = creator.getMessage().getText();
 
         assertEquals(expected, actual);
