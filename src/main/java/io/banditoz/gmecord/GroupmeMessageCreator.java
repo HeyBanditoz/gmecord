@@ -93,7 +93,6 @@ public class GroupmeMessageCreator {
         for (String k : Bot.getMentionableGroupme().keySet()) {
             if (initialMessage.toString().contains("@" + k)) {
                 if (!found) {
-                    initialAttachments = new ArrayList<>();
                     found = true;
                 }
                 int start = initialMessage.toString().indexOf(k) - 1;
