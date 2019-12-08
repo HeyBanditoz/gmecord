@@ -101,11 +101,14 @@ public class DiscordMessageCreator {
                         .append(a.getLng())
                         .append(" ");
             }
-            else if (a.getType().compareToIgnoreCase("emoji") == 0) {
+            else if (a.getType().equals("emoji")) {
                 return; // emojis aren't supported.
             }
-            else if (a.getType().compareToIgnoreCase("mentions") == 0) {
+            else if (a.getType().equals("mentions")) {
                 return; // mentions don't do anything on discord's side, we also don't care.
+            }
+            else if (a.getType().equals("postprocessing")) {
+                return; // do nothing, it's just an image
             }
             else {
                 finalizedMessage.append("<ATTACHMENT> Unknown attachment type: ")
