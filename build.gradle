@@ -26,11 +26,11 @@ repositories {
 
 dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-    compile group: 'io.javalin', name:'javalin', version:'3.5.0'
-    compile ('net.dv8tion:JDA:4.0.0_46') {
+    compile group: 'io.javalin', name:'javalin', version:'3.6.0'
+    compile ('net.dv8tion:JDA:4.0.0_59') {
         exclude module: 'opus-java'
     }
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
 
     // Use JUnit test framework
