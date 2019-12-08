@@ -1,5 +1,6 @@
 package io.banditoz.gmecord;
 
+import io.banditoz.gmecord.api.Attachment;
 import io.banditoz.gmecord.api.GroupmeMessage;
 import io.banditoz.gmecord.util.MarkdownUtils;
 
@@ -75,48 +76,46 @@ public class DiscordMessageCreator {
 
     /**
      * Build Groupme attachments to a string.
-     * This makes a bold assumption that there shall be only one attachment per message (even though it's an array?)
-     * Groupme's API documentation is the worst I've ever seen (I actually haven't seen many APIs, I'm new to this.)
-     * I've tested it, I can't send an image and a location.
-     * Here's to hoping.
      */
     private void buildAttachments() {
-        if (message.getAttachments()[0].getType().compareToIgnoreCase("image") == 0) {
-            finalizedMessage.append("<IMAGE> ")
-                    .append("URL: ")
-                    .append(message.getAttachments()[0].getUrl())
-                    .append(" ");
+        for (Attachment a : message.getAttachments()) {
+            if (a.getType().compareToIgnoreCase("image") == 0) {
+                finalizedMessage.append("<IMAGE> ")
+                        .append("URL: ")
+                        .append(a.getUrl())
+                        .append(" ");
+            }
+            else if (a.getType().compareToIgnoreCase("location") == 0) {
+                String googleMaps = "http://maps.google.com/maps?q=";
+                finalizedMessage.append("<LOCATION>")
+                        .append(" Latitude: " )
+                        .append(a.getLat())
+                        .append(", Longitude: ")
+                        .append(a.getLng())
+                        .append(", Name: ")
+                        .append(a.getName())
+                        .append(", Google Maps URL: ")
+                        .append(googleMaps)
+                        .append(a.getLat())
+                        .append(",")
+                        .append(a.getLng())
+                        .append(" ");
+            }
+            else if (a.getType().compareToIgnoreCase("emoji") == 0) {
+                return; // emojis aren't supported.
+            }
+            else if (a.getType().compareToIgnoreCase("mentions") == 0) {
+                return; // mentions don't do anything on discord's side, we also don't care.
+            }
+            else {
+                finalizedMessage.append("<ATTACHMENT> Unknown attachment type: ")
+                        .append(a.getType())
+                        .append(", Array length: ")
+                        .append(message.getAttachments().length)
+                        .append(", getAttachments[0].toString() `")
+                        .append(a.toString())
+                        .append("` Message text: ");
+            }
         }
-        else if (message.getAttachments()[0].getType().compareToIgnoreCase("location") == 0) {
-            String googleMaps = "http://maps.google.com/maps?q=";
-            finalizedMessage.append("<LOCATION>")
-                    .append(" Latitude: " )
-                    .append(message.getAttachments()[0].getLat())
-                    .append(", Longitude: ")
-                    .append(message.getAttachments()[0].getLng())
-                    .append(", Name: ")
-                    .append(message.getAttachments()[0].getName())
-                    .append(", Google Maps URL: ")
-                    .append(googleMaps)
-                    .append(message.getAttachments()[0].getLat())
-                    .append(",")
-                    .append(message.getAttachments()[0].getLng())
-                    .append(" ");
         }
-        else if (message.getAttachments()[0].getType().compareToIgnoreCase("emoji") == 0) {
-            return; // emojis aren't supported.
-        }
-        else if (message.getAttachments()[0].getType().compareToIgnoreCase("mentions") == 0) {
-            return; // mentions don't do anything on discord's side, we also don't care.
-        }
-        else {
-            finalizedMessage.append("<ATTACHMENT> Unknown attachment type: ")
-                    .append(message.getAttachments()[0].getType())
-                    .append(", Array length: ")
-                    .append(message.getAttachments().length)
-                    .append(", getAttachments[0].toString() `")
-                    .append(message.getAttachments()[0].toString())
-                    .append("` Message text: ");
-        }
-    }
 }
