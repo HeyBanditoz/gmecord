@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.JDABuilder;
 import okhttp3.OkHttpClient;
 import org.slf4j.LoggerFactory;
 
-import javax.security.auth.login.LoginException;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;

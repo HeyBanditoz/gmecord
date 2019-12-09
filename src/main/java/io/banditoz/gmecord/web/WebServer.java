@@ -8,8 +8,6 @@ import org.eclipse.jetty.server.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
-
 public class WebServer extends Thread {
     private String username;
     private String password;
