@@ -11,20 +11,17 @@ import java.io.InputStream;
 import java.util.Objects;
 
 public class GroupmeImageUploader {
-    private final Logger logger;
-
-    public GroupmeImageUploader() {
-        logger = LoggerFactory.getLogger(GroupmeImageUploader.class);
-    }
+    private final static Logger logger = LoggerFactory.getLogger(GroupmeImageUploader.class);
 
     /**
      * Uploads an image URL to Groupme (because they require it for some reason only God knows. Why they just can't
-     * proxy like Discord does is beyond me, but whatever.)
+     * proxy like Discord does is beyond me, but whatever.) Update: apparently they DO with the postprocessing
+     * attachment type, but we will just do this so the image are more permanent.
      * @param url The image URL to upload to Groupme.
      * @return String of the image URL.
      * @throws IOException If something went wrong getting the image.
      */
-    public String uploadImage(String url) throws IOException {
+    public static String uploadImage(String url) throws IOException {
         logger.debug("Starting upload of image " + url);
         Request request = new Request.Builder()
                 .url(url)
