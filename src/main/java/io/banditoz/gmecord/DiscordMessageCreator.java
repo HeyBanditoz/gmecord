@@ -22,6 +22,9 @@ public class DiscordMessageCreator {
         // Escape Discord's markdown so the message can't get messed up unintentionally
         formattedName = MarkdownUtils.escapeMarkdownCharacters(formattedName);
         formattedName = formattedName.replaceAll("https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)", "[URL Sanitized]");
+        if (formattedName.contains("SYSTEM MESSAGE") && !isSystemMessage) {
+            formattedName = "<Sanitized>";
+        }
 
         // Then bold their name so it looks nicer
         formattedName = "**" + formattedName + "** ";
