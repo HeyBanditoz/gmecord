@@ -1,21 +1,16 @@
 package io.banditoz.gmecord.api;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 import java.util.Objects;
 
 public class BotMessage {
-
-    @SerializedName("bot_id")
-    @Expose
+    @JsonProperty("bot_id")
     private String botId;
-    @SerializedName("text")
-    @Expose
+    @JsonProperty("text")
     private String text;
-    @SerializedName("attachments")
-    @Expose
+    @JsonProperty("attachments")
     private List<Attachment> attachments;
 
     @Override
@@ -25,20 +20,6 @@ public class BotMessage {
                 ", text='" + text + '\'' +
                 ", attachments=" + attachments +
                 '}';
-    }
-
-    public BotMessage(String botId, String text) {
-        this.botId = botId;
-        this.text = text;
-    }
-
-    public BotMessage(String botId, String text, List<Attachment> initialAttachments) {
-        this.botId = botId;
-        this.text = text;
-        this.attachments = initialAttachments;
-    }
-
-    public BotMessage() {
     }
 
     @Override
@@ -51,26 +32,32 @@ public class BotMessage {
                 Objects.equals(attachments, that.attachments);
     }
 
+    @JsonProperty("bot_id")
     public String getBotId() {
         return botId;
     }
 
+    @JsonProperty("bot_id")
     public void setBotId(String botId) {
         this.botId = botId;
     }
 
+    @JsonProperty("text")
     public String getText() {
         return text;
     }
 
+    @JsonProperty("text")
     public void setText(String text) {
         this.text = text;
     }
 
+    @JsonProperty("attachments")
     public List<Attachment> getAttachments() {
         return attachments;
     }
 
+    @JsonProperty("attachments")
     public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
     }

@@ -5,6 +5,7 @@ import io.banditoz.gmecord.util.SerializerDeserializer;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -25,8 +26,7 @@ public class PasteggUploader {
     public String uploadToPastegg() throws IOException {
         String responseString;
         Response response;
-        String json = SerializerDeserializer.serializePaste(this.paste);
-        RequestBody body = RequestBody.create(JSON, json);
+        RequestBody body = RequestBody.create(JSON, SerializerDeserializer.serializePaste(paste));
         Request request = new Request.Builder()
                 .url("https://api.paste.gg/v1/pastes/")
                 .post(body)

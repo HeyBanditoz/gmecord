@@ -1,7 +1,6 @@
 package io.banditoz.gmecord.api;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,82 +33,88 @@ public class Attachment {
                 Objects.equals(loci, that.loci);
     }
 
-    @SerializedName("type")
-    @Expose
+    @JsonProperty("type")
     private String type;
-    @SerializedName("url")
-    @Expose
+    @JsonProperty("url")
     private String url;
-    @SerializedName("lat")
-    @Expose
+    @JsonProperty("lat")
     private String lat;
-    @SerializedName("lng")
-    @Expose
+    @JsonProperty("lng")
     private String lng;
-    @SerializedName("name")
-    @Expose
+    @JsonProperty("name")
     private String name;
-    @SerializedName("user_ids")
-    @Expose
+    @JsonProperty("user_ids")
     private List<String> userIds = null;
-
-    public List<String> getUserIds() {
-        return userIds;
-    }
-
-    public void setUserIds(List<String> userIds) {
-        this.userIds = userIds;
-    }
-
-    public List<List<Integer>> getLoci() {
-        return loci;
-    }
-
-    public void setLoci(List<List<Integer>> loci) {
-        this.loci = loci;
-    }
-
-    @SerializedName("loci")
-    @Expose
+    @JsonProperty("loci")
     private List<List<Integer>> loci;
 
+    @JsonProperty("type")
     public String getType() {
         return type;
     }
 
+    @JsonProperty("type")
     public void setType(String type) {
         this.type = type;
     }
 
+    @JsonProperty("url")
     public String getUrl() {
         return url;
     }
 
+    @JsonProperty("url")
     public void setUrl(String url) {
         this.url = url;
     }
 
+    @JsonProperty("lat")
     public String getLat() {
         return lat;
     }
 
+    @JsonProperty("lat")
     public void setLat(String lat) {
         this.lat = lat;
     }
 
+    @JsonProperty("lng")
     public String getLng() {
         return lng;
     }
 
+    @JsonProperty("lng")
     public void setLng(String lng) {
         this.lng = lng;
     }
 
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    @JsonProperty("name")
     public void setName(String name) {
         this.name = name;
+    }
+
+    @JsonProperty("user_ids")
+    public List<String> getUserIds() {
+        return userIds;
+    }
+
+    @JsonProperty("user_ids")
+    public void setUserIds(List<String> userIds) {
+        this.userIds = userIds;
+    }
+
+    @JsonProperty("loci")
+    public List<List<Integer>> getLoci() {
+        return loci;
+    }
+
+    @JsonProperty("loci")
+    public void setLoci(List<List<Integer>> loci) {
+        this.loci = loci;
     }
 }

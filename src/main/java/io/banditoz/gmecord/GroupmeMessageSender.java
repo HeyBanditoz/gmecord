@@ -1,5 +1,6 @@
 package io.banditoz.gmecord;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.banditoz.gmecord.api.BotMessage;
 import io.banditoz.gmecord.util.SerializerDeserializer;
 import okhttp3.*;
@@ -18,7 +19,12 @@ public class GroupmeMessageSender {
         String json;
         String botID = settings.getBotID();
         message.setBotId(botID);
-        json = SerializerDeserializer.serializeMessage(message);
+        try {
+            json = SerializerDeserializer.serializeMessage(message);
+        } catch (JsonProcessingException e) {
+            logger.error("Error while serializing message!", e);
+            return; // sorry!
+        }
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url("https://api.groupme.com/v3/bots/post")

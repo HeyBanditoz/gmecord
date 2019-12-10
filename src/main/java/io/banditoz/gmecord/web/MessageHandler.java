@@ -1,6 +1,6 @@
 package io.banditoz.gmecord.web;
 
-import com.google.gson.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.banditoz.gmecord.DiscordMessageCreator;
 import io.banditoz.gmecord.DiscordMessageSender;
 import io.banditoz.gmecord.SettingsManager;
@@ -30,7 +30,7 @@ public class MessageHandler {
                 logger.debug("Setting last user to " + lastUser);
             }
             DiscordMessageSender.sendMessageToDiscord(new DiscordMessageCreator(message, message.getSystem()).getMessage());
-        } catch (JsonParseException e) {
+        } catch (JsonProcessingException e) {
             logger.warn("Bad JSON from webserver. ", e);
             ctx.status(Response.SC_BAD_REQUEST);
             ctx.result(e.toString() + "\n");

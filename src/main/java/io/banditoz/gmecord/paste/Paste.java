@@ -2,8 +2,7 @@ package io.banditoz.gmecord.paste;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Paste {
     public Paste(String message) {
@@ -19,58 +18,63 @@ public class Paste {
         this.setFiles(files);
     }
 
-    @SerializedName("name")
-    @Expose
+    @JsonProperty("name")
     private String name;
-    @SerializedName("description")
-    @Expose
+    @JsonProperty("description")
     private String description;
-    @SerializedName("visibility")
-    @Expose
+    @JsonProperty("visibility")
     private String visibility;
-    @SerializedName("expires")
-    @Expose
+    @JsonProperty("expires")
     private String expires;
-    @SerializedName("files")
-    @Expose
+    @JsonProperty("files")
     private List<File> files = null;
 
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    @JsonProperty("name")
     public void setName(String name) {
         this.name = name;
     }
 
+    @JsonProperty("description")
     public String getDescription() {
         return description;
     }
 
+    @JsonProperty("description")
     public void setDescription(String description) {
         this.description = description;
     }
 
+    @JsonProperty("visibility")
     public String getVisibility() {
         return visibility;
     }
 
+    @JsonProperty("visibility")
     public void setVisibility(String visibility) {
         this.visibility = visibility;
     }
 
+    @JsonProperty("expires")
     public String getExpires() {
         return expires;
     }
 
+    @JsonProperty("expires")
     public void setExpires(String expires) {
         this.expires = expires;
     }
 
+    @JsonProperty("files")
     public List<File> getFiles() {
         return files;
     }
 
+    @JsonProperty("files")
     public void setFiles(List<File> files) {
         this.files = files;
     }
@@ -78,72 +82,78 @@ public class Paste {
 }
 
 class Content {
-    @SerializedName("format")
-    @Expose
+    @JsonProperty("format")
     private String format;
-    @SerializedName("highlight_language")
-    @Expose
+    @JsonProperty("highlight_language")
     private Object highlightLanguage;
-    @SerializedName("value")
-    @Expose
+    @JsonProperty("value")
     private String value;
-    @SerializedName("content")
-    @Expose
+    @JsonProperty("content")
     private String content;
 
+    @JsonProperty("format")
     public String getFormat() {
         return format;
     }
 
+    @JsonProperty("format")
     public void setFormat(String format) {
         this.format = format;
     }
 
+    @JsonProperty("highlight_language")
     public Object getHighlightLanguage() {
         return highlightLanguage;
     }
 
+    @JsonProperty("highlight_language")
     public void setHighlightLanguage(Object highlightLanguage) {
         this.highlightLanguage = highlightLanguage;
     }
 
+    @JsonProperty("value")
     public String getValue() {
         return value;
     }
 
+    @JsonProperty("value")
     public void setValue(String value) {
         this.value = value;
     }
 
+    @JsonProperty("content")
     public String getContent() {
         return content;
     }
 
+    @JsonProperty("content")
     public void setContent(String content) {
         this.content = content;
     }
 }
 
 class File {
-    @SerializedName("name")
-    @Expose
+    @JsonProperty("name")
     private String name;
-    @SerializedName("content")
-    @Expose
+    @JsonProperty("content")
     private Content content;
 
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    @JsonProperty("name")
     public void setName(String name) {
         this.name = name;
     }
 
+    @JsonProperty("content")
     public Content getContent() {
         return content;
     }
 
+    @JsonProperty("content")
     public void setContent(Content content) {
         this.content = content;
     }

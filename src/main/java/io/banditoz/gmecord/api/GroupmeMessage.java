@@ -1,7 +1,6 @@
 package io.banditoz.gmecord.api;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Arrays;
 
@@ -29,137 +28,148 @@ public class GroupmeMessage {
                 '}';
     }
 
-    @SerializedName("attachments")
-    @Expose
+    @JsonProperty("attachments")
     private Attachment[] attachments = null;
-    @SerializedName("avatar_url")
-    @Expose
+    @JsonProperty("avatar_url")
     private String avatarUrl;
-    @SerializedName("created_at")
-    @Expose
+    @JsonProperty("created_at")
     private int createdAt;
-    @SerializedName("group_id")
-    @Expose
+    @JsonProperty("group_id")
     private String groupId;
-    @SerializedName("id")
-    @Expose
+    @JsonProperty("id")
     private String id;
-    @SerializedName("name")
-    @Expose
+    @JsonProperty("name")
     private String name;
-    @SerializedName("sender_id")
-    @Expose
+    @JsonProperty("sender_id")
     private String senderId;
-    @SerializedName("sender_type")
-    @Expose
+    @JsonProperty("sender_type")
     private String senderType;
-    @SerializedName("source_guid")
-    @Expose
+    @JsonProperty("source_guid")
     private String sourceGuid;
-    @SerializedName("system")
-    @Expose
+    @JsonProperty("system")
     private boolean system;
-    @SerializedName("text")
-    @Expose
+    @JsonProperty("text")
     private String text;
-    @SerializedName("user_id")
-    @Expose
+    @JsonProperty("user_id")
     private String userId;
 
+    @JsonProperty("attachments")
     public Attachment[] getAttachments() {
         return attachments;
     }
 
+    @JsonProperty("attachments")
     public void setAttachments(Attachment[] attachments) {
         this.attachments = attachments;
     }
 
+    @JsonProperty("avatar_url")
     public String getAvatarUrl() {
         return avatarUrl;
     }
 
+    @JsonProperty("avatar_url")
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 
+    @JsonProperty("created_at")
     public int getCreatedAt() {
         return createdAt;
     }
 
+    @JsonProperty("created_at")
     public void setCreatedAt(int createdAt) {
         this.createdAt = createdAt;
     }
 
+    @JsonProperty("group_id")
     public String getGroupId() {
         return groupId;
     }
 
+    @JsonProperty("group_id")
     public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
+    @JsonProperty("id")
     public String getId() {
         return id;
     }
 
+    @JsonProperty("id")
     public void setId(String id) {
         this.id = id;
     }
 
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    @JsonProperty("name")
     public void setName(String name) {
         this.name = name;
     }
 
+    @JsonProperty("sender_id")
     public String getSenderId() {
         return senderId;
     }
 
+    @JsonProperty("sender_id")
     public void setSenderId(String senderId) {
         this.senderId = senderId;
     }
 
+    @JsonProperty("sender_type")
     public String getSenderType() {
         return senderType;
     }
 
+    @JsonProperty("sender_type")
     public void setSenderType(String senderType) {
         this.senderType = senderType;
     }
 
+    @JsonProperty("source_guid")
     public String getSourceGuid() {
         return sourceGuid;
     }
 
+    @JsonProperty("source_guid")
     public void setSourceGuid(String sourceGuid) {
         this.sourceGuid = sourceGuid;
     }
 
+    @JsonProperty("system")
     public boolean getSystem() {
         return system;
     }
 
+    @JsonProperty("system")
     public void setSystem(boolean system) {
         this.system = system;
     }
 
+    @JsonProperty("text")
     public String getText() {
         return text;
     }
 
+    @JsonProperty("text")
     public void setText(String text) {
         this.text = text;
     }
 
+    @JsonProperty("user_id")
     public String getUserId() {
         return userId;
     }
 
+    @JsonProperty("user_id")
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
 }

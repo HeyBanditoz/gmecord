@@ -1,15 +1,11 @@
 package io.banditoz.gmecord.api;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Response {
-
-    @SerializedName("response")
-    @Expose
+    @JsonProperty("response")
     private Group response;
-    @SerializedName("meta")
-    @Expose
+    @JsonProperty("meta")
     private Object meta;
 
     @Override
@@ -20,20 +16,23 @@ public class Response {
                 '}';
     }
 
+    @JsonProperty("response")
     public Group getResponse() {
         return response;
     }
 
+    @JsonProperty("response")
     public void setResponse(Group response) {
         this.response = response;
     }
 
+    @JsonProperty("meta")
     public Object getMeta() {
         return meta;
     }
 
+    @JsonProperty("meta")
     public void setMeta(Object meta) {
         this.meta = meta;
     }
-
 }

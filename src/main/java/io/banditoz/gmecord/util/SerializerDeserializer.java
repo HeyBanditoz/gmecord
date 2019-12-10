@@ -1,7 +1,8 @@
 package io.banditoz.gmecord.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.banditoz.gmecord.Settings;
 import io.banditoz.gmecord.api.BotMessage;
 import io.banditoz.gmecord.api.GroupmeMessage;
 import io.banditoz.gmecord.api.Payload;
@@ -9,46 +10,58 @@ import io.banditoz.gmecord.api.Response;
 import io.banditoz.gmecord.paste.Paste;
 import io.banditoz.gmecord.paste.PasteResponse;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.Buffer;
+
 public class SerializerDeserializer {
-    private static final Gson gson;
+    private static final ObjectMapper mapper;
 
     static {
-        gson = new GsonBuilder().serializeNulls().create();
+        mapper = new ObjectMapper();
     }
 
-    public static GroupmeMessage deserializeMessageGivenString(String json) throws NullPointerException {
-        return gson.fromJson(json, GroupmeMessage.class);
+    public static GroupmeMessage deserializeMessageGivenString(String json) throws IOException {
+        return mapper.readValue(json, GroupmeMessage.class);
     }
 
-    public static Response deserializeResponseGivenString(String json) throws NullPointerException {
-        Response response = gson.fromJson(json, Response.class);
+    public static Response deserializeResponseGivenString(String json) throws NullPointerException, IOException {
+        Response response = mapper.readValue(json, Response.class);
         if (response.getResponse() == null) {
             throw new NullPointerException("The response body is null!");
         }
         return response;
     }
 
-    public static Payload deserializeImageGivenString(String json) throws NullPointerException {
-        Payload payload = gson.fromJson(json, Payload.class);
+    public static Payload deserializeImageGivenString(String json) throws NullPointerException, IOException {
+        Payload payload = mapper.readValue(json, Payload.class);
         if (payload.getPictureUrl() == null) {
             throw new NullPointerException("There is no image URL here!");
         }
         return payload;
     }
 
-    public static PasteResponse deserializePasteResponseGivenString(String json) {
-        PasteResponse pr = gson.fromJson(json, PasteResponse.class);
+    public static PasteResponse deserializePasteResponseGivenString(String json) throws IOException, IllegalArgumentException {
+        PasteResponse pr = mapper.readValue(json, PasteResponse.class);
         if (pr.getStatus().compareToIgnoreCase("success") != 0) {
             throw new IllegalArgumentException("The paste response wasn't successful! Json: " + json);
         }
         return pr;
     }
 
-    public static String serializeMessage(BotMessage message) {
-        return gson.toJson(message);
+    public static String serializeMessage(BotMessage message) throws JsonProcessingException {
+        return mapper.writeValueAsString(message);
     }
 
-    public static String serializePaste(Paste paste) {
-        return gson.toJson(paste);
+    public static String serializePaste(Paste paste) throws JsonProcessingException {
+        return mapper.writeValueAsString(paste);
+    }
+
+    public static String serializeSettings(Settings settings) throws JsonProcessingException {
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(settings);
+    }
+
+    public static Settings deserializeSettings(BufferedReader br) throws IOException {
+        return mapper.readValue(br, Settings.class);
     }
 }

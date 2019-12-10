@@ -1,14 +1,12 @@
 package io.banditoz.gmecord;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import io.banditoz.gmecord.util.SerializerDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +14,6 @@ import java.nio.file.Path;
 // Thanks https://github.com/DV8FromTheWorld/Yui/blob/e8da929a8f637591e4da53599c39c8161be38746/src/net/dv8tion//SettingsManager.java
 public class SettingsManager {
     private static SettingsManager instance;
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private Settings Settings;
     private final Path configFile = new File(".").toPath().resolve("Config.json");
     private final Logger logger = LoggerFactory.getLogger(SettingsManager.class);
@@ -31,7 +28,7 @@ public class SettingsManager {
     public SettingsManager() {
         if (!configFile.toFile().exists()) {
             logger.info("Creating default settings.");
-            logger.info("You will need to edit the Config.json with your login information.");
+            logger.info("You will need to edit Config.json with your login information.");
             this.Settings = getDefaultSettings();
             saveSettings();
             System.exit(1);
@@ -42,7 +39,7 @@ public class SettingsManager {
     public void loadSettings() {
         try {
             BufferedReader reader = Files.newBufferedReader(configFile, StandardCharsets.UTF_8);
-            this.Settings = gson.fromJson(reader, Settings.class);
+            this.Settings = SerializerDeserializer.deserializeSettings(reader);
             reader.close();
             logger.info("Settings loaded.");
         } catch (Exception e) {
@@ -55,13 +52,13 @@ public class SettingsManager {
     }
 
     public void saveSettings() {
-        String jsonOut = gson.toJson(this.Settings);
         try {
+            String jsonOut = SerializerDeserializer.serializeSettings(this.Settings);
             BufferedWriter writer = Files.newBufferedWriter(configFile, StandardCharsets.UTF_8);
             writer.append(jsonOut);
             writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error("Error saving settings.", e);
         }
     }
 

@@ -1,11 +1,9 @@
 package io.banditoz.gmecord.api;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Payload {
-    @SerializedName("payload")
-    @Expose
+    @JsonProperty("payload")
     private ImagePayload imagePayload;
 
     public String getUrl() {
@@ -26,25 +24,27 @@ public class Payload {
 }
 
 class ImagePayload {
-    @SerializedName("url")
-    @Expose
+    @JsonProperty("url")
     private String url;
-    @SerializedName("picture_url")
-    @Expose
+    @JsonProperty("picture_url")
     private String pictureUrl;
 
+    @JsonProperty("url")
     public String getUrl() {
         return url;
     }
 
+    @JsonProperty("url")
     public void setUrl(String url) {
         this.url = url;
     }
 
+    @JsonProperty("picture_url")
     public String getPictureUrl() {
         return pictureUrl;
     }
 
+    @JsonProperty("picture_url")
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
     }
