@@ -5,6 +5,8 @@ import io.banditoz.gmecord.api.Attachment;
 import io.banditoz.gmecord.paste.Paste;
 import io.banditoz.gmecord.paste.PasteggUploader;
 import io.banditoz.gmecord.util.BuildAttachments;
+import io.banditoz.gmecord.util.EmbedFormatter;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
@@ -21,7 +23,7 @@ public class DiscordMessageEvent extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
         // I'm honestly surprised this method works...
-        String message = e.getMessage().getContentDisplay();
+        StringBuilder message = new StringBuilder(e.getMessage().getContentDisplay());
         ArrayList<Attachment> attachments = new ArrayList<>();
         if (e.getChannel().getId().equals(SettingsManager.getInstance().getSettings().getChannel()) &&
                 (e.getAuthor().getId().compareToIgnoreCase(Bot.getJda().getSelfUser().getId()) != 0)) {
@@ -33,7 +35,7 @@ public class DiscordMessageEvent extends ListenerAdapter {
                                 "a bug in Groupme, only your first image was sent.", true);
                         DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
                     }
-                    message += BuildAttachments.buildOtherAttachments(e).toString();
+                    message.append(BuildAttachments.buildOtherAttachments(e).toString());
                 } catch (Exception ex) {
                     logger.error("Exception on building attachments!", ex);
                     DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, " +
@@ -43,9 +45,15 @@ public class DiscordMessageEvent extends ListenerAdapter {
                 }
             }
             if (message.length() > 965) {
-                messageIsTooLong(e, message);
+                messageIsTooLong(e, message.toString());
             }
             else {
+                if (!e.getMessage().getEmbeds().isEmpty()) {
+                    for (MessageEmbed embed : e.getMessage().getEmbeds()) {
+                        message.append("<EMBEDDED MESSAGE>\n");
+                        message.append(EmbedFormatter.formatEmbed(embed));
+                    }
+                }
                 GroupmeMessageCreator gmeMessage = new GroupmeMessageCreator("<" + e.getAuthor().getName() + "> " + message, false, attachments);
                 GroupmeMessageSender.sendMessageToGroupMe(gmeMessage.getMessage());
             }
