@@ -44,16 +44,16 @@ public class DiscordMessageEvent extends ListenerAdapter {
                     DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
                 }
             }
+            if (!e.getMessage().getEmbeds().isEmpty()) {
+                for (MessageEmbed embed : e.getMessage().getEmbeds()) {
+                    message.append("\n<EMBEDDED MESSAGE>\n");
+                    message.append(EmbedFormatter.formatEmbed(embed));
+                }
+            }
             if (message.length() > 965) {
                 messageIsTooLong(e, message.toString());
             }
             else {
-                if (!e.getMessage().getEmbeds().isEmpty()) {
-                    for (MessageEmbed embed : e.getMessage().getEmbeds()) {
-                        message.append("\n<EMBEDDED MESSAGE>\n");
-                        message.append(EmbedFormatter.formatEmbed(embed));
-                    }
-                }
                 GroupmeMessageCreator gmeMessage = new GroupmeMessageCreator("<" + e.getAuthor().getName() + "> " + message, false, attachments);
                 GroupmeMessageSender.sendMessageToGroupMe(gmeMessage.getMessage());
             }
