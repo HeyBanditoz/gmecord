@@ -1,5 +1,6 @@
 package io.banditoz.gmecord.paste;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class PasteResponse {
     }
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 class Result {
     @JsonProperty("id")
     private String id;
