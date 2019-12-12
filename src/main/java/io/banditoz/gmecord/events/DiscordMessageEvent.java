@@ -50,7 +50,7 @@ public class DiscordMessageEvent extends ListenerAdapter {
             else {
                 if (!e.getMessage().getEmbeds().isEmpty()) {
                     for (MessageEmbed embed : e.getMessage().getEmbeds()) {
-                        message.append("<EMBEDDED MESSAGE>\n");
+                        message.append("\n<EMBEDDED MESSAGE>\n");
                         message.append(EmbedFormatter.formatEmbed(embed));
                     }
                 }
