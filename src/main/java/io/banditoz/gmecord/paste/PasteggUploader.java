@@ -3,9 +3,6 @@ package io.banditoz.gmecord.paste;
 import io.banditoz.gmecord.Bot;
 import io.banditoz.gmecord.util.SerializerDeserializer;
 import okhttp3.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 

@@ -12,7 +12,6 @@ import io.banditoz.gmecord.paste.PasteResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.Buffer;
 
 public class SerializerDeserializer {
     private static final ObjectMapper mapper;
