@@ -26,13 +26,13 @@ repositories {
 
 dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-    compile group: 'io.javalin', name:'javalin', version:'3.6.0'
-    compile ('net.dv8tion:JDA:4.0.0_59') {
+    compile group: 'io.javalin', name:'javalin', version:'3.7.0'
+    compile ('net.dv8tion:JDA:4.1.1_103') {
         exclude module: 'opus-java'
     }
-    implementation group: 'com.fasterxml.jackson.core', name:'jackson-core', version:'2.9.8'
-    implementation group: 'com.fasterxml.jackson.core', name:'jackson-annotations', version:'2.9.8'
-    implementation group: 'com.fasterxml.jackson.core', name:'jackson-databind', version:'2.9.8'
+    implementation group: 'com.fasterxml.jackson.core', name:'jackson-core', version:'2.10.1'
+    implementation group: 'com.fasterxml.jackson.core', name:'jackson-annotations', version:'2.10.1'
+    implementation group: 'com.fasterxml.jackson.core', name:'jackson-databind', version:'2.10.1'
 
 
     // Use JUnit test framework
