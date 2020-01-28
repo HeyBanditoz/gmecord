@@ -30,10 +30,8 @@ public class GroupmeMessageSender {
                 .url("https://api.groupme.com/v3/bots/post")
                 .post(body)
                 .build();
-        logger.debug("Sending message to Groupme: " + json);
-        try (Response response = Bot.getOkHttpClient().newCall(request).execute()) {
-            logger.debug(response.protocol() + " " + response.code() + " " + response.message() + " (Took " + (response.receivedResponseAtMillis() - response.sentRequestAtMillis()) + " ms for a response.)");
-            logger.debug("Their response headers:\n" + response.headers());
+        try {
+            Bot.getOkHttpClient().newCall(request).execute();
         } catch (Exception e) {
             logger.error("Error on sending message to Groupme! json: " + json + " ", e);
         }

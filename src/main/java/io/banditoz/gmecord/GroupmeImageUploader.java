@@ -22,7 +22,6 @@ public class GroupmeImageUploader {
      * @throws IOException If something went wrong getting the image.
      */
     public static String uploadImage(String url) throws IOException {
-        logger.debug("Starting upload of image " + url);
         Request request = new Request.Builder()
                 .url(url)
                 .build();

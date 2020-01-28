@@ -12,11 +12,9 @@ import java.io.IOException;
 public class PasteggUploader {
     private final Paste paste;
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    private final Logger logger;
 
     public PasteggUploader(Paste paste) {
         this.paste = paste;
-        logger = LoggerFactory.getLogger(PasteggUploader.class);
     }
 
     /**
@@ -34,7 +32,6 @@ public class PasteggUploader {
 
         response = Bot.getOkHttpClient().newCall(request).execute();
         responseString = response.body().string();
-        logger.debug("Response string: " + responseString);
         return buildUrl(SerializerDeserializer.deserializePasteResponseGivenString(responseString));
     }
 
