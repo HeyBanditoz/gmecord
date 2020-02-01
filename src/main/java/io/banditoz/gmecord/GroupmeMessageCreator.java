@@ -69,26 +69,22 @@ public class GroupmeMessageCreator {
      * mobile version.) Maybe I <i>am</i> doing it wrong but Groupme is fixing it? Or maybe they're doing it wrong
      * and so am I? Maybe they should just do it like Discord, where it's just <@user_id>. So easy.
      */
-    private void checkForMentionables() { //TODO: Optimize this a little more.
+    private void checkForMentionables() {
         boolean found = false;
-        Attachment a = new Attachment();
         List<String> userIdList = new ArrayList<>();
         List<List<Integer>> lociList = new ArrayList<>();
         if (initialMessage.toString().contains("@GroupmeBridge")) {
-            initialMessage = new StringBuilder(initialMessage.toString()
-                    .replace("@GroupmeBridge", "@" + MessageHandler.lastUser)); // if someone pings the bridge, ping the last user other than the bot
+            int index = initialMessage.indexOf("@GroupmeBridge"); // if someone pings the bridge, ping the last user other than the bot
+            initialMessage.replace(index, index + 14, "@" + MessageHandler.lastUser); // length of @GroupmeBridge
         }
         if (initialMessage.toString().contains("@everyone")) {
-            int start = initialMessage.indexOf("@everyone");
-            initialMessage = new StringBuilder(initialMessage.toString()
-                    .replace("@everyone", ""));
-            Iterator iterator = Bot.getMentionableGroupme().entrySet().iterator();
-            System.out.println(MessageHandler.lastUser);
-            while (iterator.hasNext()) {
-                Map.Entry mapElement = (Map.Entry)iterator.next();
-                initialMessage = new StringBuilder(initialMessage.substring(0, start) + "@" + mapElement.getKey() + " " +initialMessage.substring(start,initialMessage.length()));
-                start+=mapElement.getKey().toString().length()+2;
+            int index = initialMessage.indexOf("@everyone");
+            initialMessage.replace(index - 1, index + 9, ""); // length of @everyone
+            for (String s : Bot.getMentionableGroupme().keySet()) {
+                initialMessage.insert(index, "@" + s + " ");
+                index += s.length() + 2; // '@' and ' ' are two characters.
             }
+            
         }
         for (String k : Bot.getMentionableGroupme().keySet()) {
             if (initialMessage.toString().contains("@" + k)) {
@@ -105,6 +101,8 @@ public class GroupmeMessageCreator {
             }
         }
         if (found) {
+            Attachment a = new Attachment();
+            lociList.sort(Comparator.comparing(l -> l.get(0))); // TODO sort userIdList... somehow..... :(
             a.setType("mentions");
             a.setUserIds(userIdList);
             a.setLoci(lociList);
