@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class Bot {
     private static JDA jda;
     private static OkHttpClient client = new OkHttpClient.Builder()
-            .addInterceptor(new LoggerInterceptor())
+            //.addInterceptor(new LoggerInterceptor())
             .build();
     private static HashMap<String, String> mentionableGroupme;
     private static HashMap<String, String> mentionableDiscord;
