@@ -20,7 +20,7 @@ public class LoggerInterceptor implements Interceptor {
 
         long t1 = System.nanoTime();
         String requestString = stringifyRequestBody(request);
-        logger.debug("Sending request " + request.url() + " with body " +
+        logger.debug("Sending request as " + request.method() + " to " + request.url() + " with body " +
                 ((requestString.equals("")) ? "<no body>" : requestString) +
                 " and with headers " + ((request.headers().size() == 0) ? "<no headers>" : "\n" + request.headers() + "\n"));
 
