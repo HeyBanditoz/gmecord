@@ -30,6 +30,7 @@ dependencies {
     compile ('net.dv8tion:JDA:4.1.1_103') {
         exclude module: 'opus-java'
     }
+    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.3.1'
     implementation group: 'com.fasterxml.jackson.core', name:'jackson-core', version:'2.10.1'
     implementation group: 'com.fasterxml.jackson.core', name:'jackson-annotations', version:'2.10.1'
     implementation group: 'com.fasterxml.jackson.core', name:'jackson-databind', version:'2.10.1'

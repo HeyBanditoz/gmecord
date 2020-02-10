@@ -7,6 +7,9 @@ import io.banditoz.gmecord.web.WebServer;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
@@ -15,8 +18,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Bot {
     private static JDA jda;
+    private static Logger logger = LoggerFactory.getLogger(Bot.class);
     private static OkHttpClient client = new OkHttpClient.Builder()
-            //.addInterceptor(new LoggerInterceptor())
+            .addInterceptor(new HttpLoggingInterceptor(s -> logger.debug(s)).setLevel(HttpLoggingInterceptor.Level.BODY))
             .build();
     private static HashMap<String, String> mentionableGroupme;
     private static HashMap<String, String> mentionableDiscord;
@@ -43,7 +47,7 @@ public class Bot {
         Timer pingMeasurementTimer = new Timer();
         pingMeasurementTimer.schedule(new ActivityTimerTask(), 0L, TimeUnit.MINUTES.toMillis(1));
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> LoggerFactory.getLogger(getClass()).info("Bot is now shutting down.")));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> logger.info("Bot is now shutting down.")));
     }
 
     public static JDA getJda() {
