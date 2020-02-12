@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class PasteggUploader {
     private final Paste paste;
-    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private static final MediaType MEDIA_TYPE_JSON = MediaType.get("application/json; charset=utf-8");
 
     public PasteggUploader(Paste paste) {
         this.paste = paste;
@@ -21,7 +21,7 @@ public class PasteggUploader {
     public String uploadToPastegg() throws IOException {
         String responseString;
         Response response;
-        RequestBody body = RequestBody.create(JSON, SerializerDeserializer.serializePaste(paste));
+        RequestBody body = RequestBody.create(SerializerDeserializer.serializePaste(paste), MEDIA_TYPE_JSON);
         Request request = new Request.Builder()
                 .url("https://api.paste.gg/v1/pastes/")
                 .post(body)

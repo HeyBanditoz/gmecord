@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class GroupmeMessageCreator {
     private final BotMessage message;
     private StringBuilder initialMessage;
-    private List<Attachment> initialAttachments;
+    private final List<Attachment> initialAttachments;
 
     public GroupmeMessageCreator(String initialMessage, boolean isSystemMessage) {
         if (isSystemMessage) {

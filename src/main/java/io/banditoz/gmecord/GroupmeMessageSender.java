@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 public class GroupmeMessageSender {
     private static final Settings settings = SettingsManager.getInstance().getSettings();
     private static final Logger logger = LoggerFactory.getLogger(GroupmeMessageSender.class);
-    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private static final MediaType MEDIA_TYPE_JSON = MediaType.get("application/json; charset=utf-8");
 
     /**
      * Sends a message to GroupMe, building the attachment list and message.
@@ -25,7 +25,7 @@ public class GroupmeMessageSender {
             logger.error("Error while serializing message!", e);
             return; // sorry!
         }
-        RequestBody body = RequestBody.create(JSON, json);
+        RequestBody body = RequestBody.create(json, MEDIA_TYPE_JSON);
         Request request = new Request.Builder()
                 .url("https://api.groupme.com/v3/bots/post")
                 .post(body)

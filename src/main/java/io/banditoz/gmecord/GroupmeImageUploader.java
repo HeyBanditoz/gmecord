@@ -23,7 +23,7 @@ public class GroupmeImageUploader {
      */
     public static String uploadImage(String url) throws IOException {
         InputStream inputStream = downloadImage(url);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), inputStream.readAllBytes());
+        RequestBody requestBody = RequestBody.create(inputStream.readAllBytes(), MediaType.parse("image/png"));
         Request request = new Request.Builder()
                 .url("https://image.groupme.com/pictures")
                 .post(requestBody)
@@ -43,6 +43,13 @@ public class GroupmeImageUploader {
         return image.getPictureUrl();
     }
 
+    /**
+     * Downloads an image given the URL and returns an InputStream of its bytes.
+     * @param url The image URL to attempt to download.
+     * @return An InputStream of the image.
+     * @throws IOException If something went wrong while downloading the image.
+     * @throws IllegalArgumentException If the URL we attempted wasn't actually an image (different Content-Type)
+     */
     public static InputStream downloadImage(String url) throws IOException, IllegalArgumentException {
         Request request = new Request.Builder()
                 .url(url)
