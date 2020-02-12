@@ -31,7 +31,11 @@ public class BuildAttachments {
         if (m.find()) {
             Attachment attachment = new Attachment();
             attachment.setType("image");
-            attachment.setUrl(GroupmeImageUploader.uploadImage(m.group(0)));
+            try {
+                attachment.setUrl(GroupmeImageUploader.uploadImage(m.group(0)));
+            } catch (IllegalArgumentException ex) {
+                return attachments; // TODO Make this without exceptions, you're lazy!
+            }
             attachments.add(attachment);
         }
         return attachments;
