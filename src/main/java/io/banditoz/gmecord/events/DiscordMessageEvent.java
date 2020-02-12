@@ -27,22 +27,20 @@ public class DiscordMessageEvent extends ListenerAdapter {
         ArrayList<Attachment> attachments = new ArrayList<>();
         if (e.getChannel().getId().equals(SettingsManager.getInstance().getSettings().getChannel()) &&
                 (e.getAuthor().getId().compareToIgnoreCase(Bot.getJda().getSelfUser().getId()) != 0)) {
-            if (!e.getMessage().getAttachments().isEmpty()) {
-                try {
-                    attachments = BuildAttachments.buildImageAttachments(e);
-                    if (attachments.size() > 1) {
-                        DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, due to " +
-                                "a bug in Groupme, only your first image was sent.", true);
-                        DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
-                    }
-                    message.append(BuildAttachments.buildOtherAttachments(e).toString());
-                } catch (Exception ex) {
-                    logger.error("Exception on building attachments!", ex);
-                    DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, " +
-                            "there was an error while building the attachments." +
-                            " Exception: `" + ex + "`", true);
+            try {
+                attachments = BuildAttachments.buildImageAttachments(e);
+                if (attachments.size() > 1) {
+                    DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, due to " +
+                            "a bug in Groupme, only your first image was sent.", true);
                     DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
                 }
+                message.append(BuildAttachments.buildOtherAttachments(e).toString());
+            } catch (Exception ex) {
+                logger.error("Exception on building attachments!", ex);
+                DiscordMessageCreator creator = new DiscordMessageCreator("<@" + e.getAuthor().getId() + ">, " +
+                        "there was an error while building the attachments." +
+                        " Exception: `" + ex + "`", true);
+                DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
             }
             if (!e.getMessage().getEmbeds().isEmpty()) {
                 for (MessageEmbed embed : e.getMessage().getEmbeds()) {

@@ -22,13 +22,9 @@ public class GroupmeImageUploader {
      * @throws IOException If something went wrong getting the image.
      */
     public static String uploadImage(String url) throws IOException {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        Response response = Bot.getOkHttpClient().newCall(request).execute();
-        InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
+        InputStream inputStream = downloadImage(url);
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/png"), inputStream.readAllBytes());
-        request = new Request.Builder()
+        Request request = new Request.Builder()
                 .url("https://image.groupme.com/pictures")
                 .post(requestBody)
                 .header("X-Access-Token", SettingsManager.getInstance().getSettings().getGroupMeToken())
@@ -37,14 +33,31 @@ public class GroupmeImageUploader {
         Payload image = null;
         inputStream.close();
         try {
-            response = Bot.getOkHttpClient().newCall(request).execute();
+            Response response = Bot.getOkHttpClient().newCall(request).execute();
             String responseBody = Objects.requireNonNull(response.body()).string();
             image = SerializerDeserializer.deserializeImageGivenString(responseBody);
+            response.close();
         } catch (IOException e) {
             logger.error("Error while uploading image!", e);
-        } finally {
-            response.close();
         }
         return image.getPictureUrl();
+    }
+
+    public static InputStream downloadImage(String url) throws IOException, IllegalArgumentException {
+        Request request = new Request.Builder()
+                .url(url)
+                .head() // first, check if the URL is actually an image
+                .build();
+        Response response = Bot.getOkHttpClient().newCall(request).execute();
+        if (response.header("Content-Type").startsWith("image/")) {
+            request = new Request.Builder()
+                    .url(url)
+                    .build();
+            response = Bot.getOkHttpClient().newCall(request).execute();
+        }
+        else {
+            throw new IllegalArgumentException("URL to download wasn't actually in image!");
+        }
+        return Objects.requireNonNull(response.body()).byteStream();
     }
 }

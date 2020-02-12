@@ -8,21 +8,31 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BuildAttachments {
+    private static Pattern URL_PATTERN = Pattern.compile("https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)");
+
     /**
      * Builds attachments from Discord (in this case, image URLs)
      */
     public static ArrayList<Attachment> buildImageAttachments(MessageReceivedEvent e) throws IOException {
         ArrayList<Attachment> attachments = new ArrayList<>();
-        GroupmeImageUploader giu = new GroupmeImageUploader();
         for (Message.Attachment a : e.getMessage().getAttachments()) {
             if (isImage(a)) {
                 Attachment attachment = new Attachment();
                 attachment.setType("image");
-                attachment.setUrl(giu.uploadImage(a.getUrl()));
+                attachment.setUrl(GroupmeImageUploader.uploadImage(a.getUrl()));
                 attachments.add(attachment);
             }
+        }
+        Matcher m = URL_PATTERN.matcher(e.getMessage().getContentDisplay());
+        if (m.find()) {
+            Attachment attachment = new Attachment();
+            attachment.setType("image");
+            attachment.setUrl(GroupmeImageUploader.uploadImage(m.group(0)));
+            attachments.add(attachment);
         }
         return attachments;
     }
@@ -45,4 +55,6 @@ public class BuildAttachments {
     private static boolean isImage(Message.Attachment a) {
         return a.getUrl().endsWith(".png") || a.getUrl().endsWith(".jpg") || a.getUrl().endsWith(".jpeg");
     }
+
+    //private static
 }
