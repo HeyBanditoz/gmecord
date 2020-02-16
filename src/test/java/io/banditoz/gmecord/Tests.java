@@ -21,11 +21,11 @@ public class Tests { // TODO: Write mentions test for Groupme.
 
     @Test public void discordMentionsShouldBeBuiltCorrectly() {
         String sampleMessage = "@JohnDoe @Jane Doe hello! how are you guys doing @FooBar?";
-        String expected = "**<Example User>** <@163094867910590900> <@163014667920590902> hello! how are you guys doing <@163614687920290107>?";
+        String expected = "**<@JohnDoe>** <@163094867910590900> <@163014667920590902> hello! how are you guys doing <@163614687920290107>?";
 
         GroupmeMessage gMessage = new GroupmeMessage();
         gMessage.setText(sampleMessage);
-        gMessage.setName("Example User");
+        gMessage.setName("@JohnDoe");
 
         Bot.setMentionableDiscord(groupmeMentionables);
         DiscordMessageCreator message = new DiscordMessageCreator(gMessage, false);

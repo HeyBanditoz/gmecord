@@ -55,12 +55,13 @@ public class DiscordMessageCreator {
      */
     private void build() {
         if (message != null) {
-            finalizedMessage = new StringBuilder(formattedName);
+            finalizedMessage = new StringBuilder();
             if (message.getAttachments() != null && message.getAttachments().length != 0) {
                 buildAttachments();
             }
             finalizedMessage.append(message.getText());
             checkForMentionables();
+            finalizedMessage.insert(0, formattedName); // insert formatted name at beginning of string last so the name can't contain a mention
         }
     }
 
