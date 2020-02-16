@@ -32,6 +32,11 @@ public class DiscordMessageCreator {
         build();
     }
 
+    /**
+     * Alternate constructor that doesn't build attachments, checks for mentions, etc.
+     * @param msg The String to send.
+     * @param isSystemMessage If we want to append SYSTEM MESSAGE to the beginning of the message.
+     */
     public DiscordMessageCreator(String msg, boolean isSystemMessage) {
         if (isSystemMessage) {
             finalizedMessage = new StringBuilder("**<SYSTEM MESSAGE>** ");
@@ -90,7 +95,7 @@ public class DiscordMessageCreator {
                         .append(" ");
             }
             else if (a.getType().compareToIgnoreCase("location") == 0) {
-                String googleMaps = "http://maps.google.com/maps?q=";
+                String googleMaps = "https://maps.google.com/maps?q=";
                 finalizedMessage.append("<LOCATION>")
                         .append(" Latitude: " )
                         .append(a.getLat())

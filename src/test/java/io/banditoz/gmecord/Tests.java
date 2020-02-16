@@ -34,7 +34,7 @@ public class Tests { // TODO: Write mentions test for Groupme.
     }
 
     @Test public void locationAttachmentShouldBeBuiltCorrectly() {
-        String expected = "**<John Doe>** <LOCATION> Latitude: 40.777404, Longitude: -111.888207, Name: Capitol Building, Google Maps URL: http://maps.google.com/maps?q=40.777404,-111.888207 Look at my location!";
+        String expected = "**<John Doe>** <LOCATION> Latitude: 40.777404, Longitude: -111.888207, Name: Capitol Building, Google Maps URL: https://maps.google.com/maps?q=40.777404,-111.888207 Look at my location!";
         String actual;
 
         Attachment attachment1 = new Attachment();
