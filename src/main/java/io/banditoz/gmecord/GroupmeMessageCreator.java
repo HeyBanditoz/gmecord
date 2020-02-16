@@ -55,12 +55,15 @@ public class GroupmeMessageCreator {
      * Sanitize spoilers to make them blocks.
      */
     private void sanitizeSpoilers() {
+        String toBeSanitized = initialMessage.toString();
+        boolean found = false;
         Pattern r = Pattern.compile("\\|\\|(.*?)\\|\\|");
-        Matcher m = r.matcher(initialMessage);
+        Matcher m = r.matcher(toBeSanitized);
         while (m.find()) {
-            // TODO: Probably shouldn't create a new StringBuilder each time...
-            initialMessage = new StringBuilder(initialMessage.toString().replace(m.group(), "■■■"));
+            toBeSanitized = toBeSanitized.replace(m.group(), "■■■");
+            found = true;
         }
+        if (found) initialMessage = new StringBuilder(toBeSanitized);
     }
 
     /**

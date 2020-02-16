@@ -75,7 +75,7 @@ public class DiscordMessageCreator {
         boolean found = false;
         HashMap<String, String> mentionables = Bot.getMentionableDiscord();
         for (String k : mentionables.keySet()) {
-            if (finalizedMessage.toString().contains("@" + k)) {
+            if (replacement.contains("@" + k)) {
                 found = true;
                 replacement = replacement.replace("@" + k, "<@" + mentionables.get(k) + ">");
             }
