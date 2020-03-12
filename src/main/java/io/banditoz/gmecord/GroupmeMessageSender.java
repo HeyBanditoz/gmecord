@@ -3,6 +3,7 @@ package io.banditoz.gmecord;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.banditoz.gmecord.api.BotMessage;
 import io.banditoz.gmecord.util.SerializerDeserializer;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +32,26 @@ public class GroupmeMessageSender {
                 .post(body)
                 .build();
         try {
-            Bot.getOkHttpClient().newCall(request).execute();
+            Response response = Bot.getOkHttpClient().newCall(request).execute();
+            if (response.code() > 400) {
+                logger.warn("Groupme returned " + response.code() + " while sending a message.");
+                DiscordMessageCreator creator = new DiscordMessageCreator("Message `" + truncate(message.getText(), 50) + "` may have failed to send: Groupme returned " + response.code() + ".", true);
+                DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
+            }
         } catch (Exception e) {
             logger.error("Error on sending message to Groupme! json: " + json + " ", e);
+            DiscordMessageCreator creator = new DiscordMessageCreator("Message `" + truncate(message.getText(), 50) + "` may have failed to send, exception: `" + e.toString() + "`", true);
+            DiscordMessageSender.sendMessageToDiscord(creator.getMessage());
+
+        }
+    }
+
+    private static String truncate(String string, int length) {
+        if (string.length() > length) {
+            return string.substring(0, length) + "...";
+        }
+        else {
+            return string;
         }
     }
 }
