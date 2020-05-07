@@ -1,9 +1,11 @@
 package io.banditoz.gmecord.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+@JsonIgnoreProperties("muted_until")
 public class Group {
     @Override
     public String toString() {
