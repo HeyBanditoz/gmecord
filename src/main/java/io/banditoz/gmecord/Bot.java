@@ -6,6 +6,7 @@ import io.banditoz.gmecord.tasks.MentionablesTimerTask;
 import io.banditoz.gmecord.web.WebServer;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class Bot {
     public Bot() {
         Settings settings = SettingsManager.getInstance().getSettings();
         try {
-            jda = new JDABuilder(settings.getDiscordToken()).build();
+            jda = JDABuilder.createLight(settings.getDiscordToken()).enableIntents(GatewayIntent.GUILD_MEMBERS).build();
             jda.awaitReady();
         } catch (Exception ex) {
             logger.error("Could not login! Exiting safely...", ex);

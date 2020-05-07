@@ -21,6 +21,11 @@ can use it!
 * Mentioning the bridge from Discord will mention the last user to send
 a message on the Groupme side.
 
+## NOTE ON GATEWAY INTENTS
+By default, the bot will assume you have the server members intent
+checked. If not, it will fail to start (for now.) It is required for
+mentionables to function.
+
 ## Configuration
 The configuration of the bot must be in the same directory as the jar
 file, and must be called `Config.json`. A file will automatically be
