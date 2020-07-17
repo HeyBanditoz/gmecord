@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@JsonIgnoreProperties("muted_until")
+@JsonIgnoreProperties({"muted_until", "theme_name"})
 public class Group {
     @Override
     public String toString() {
