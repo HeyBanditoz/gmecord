@@ -27,7 +27,7 @@ repositories {
 dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile group: 'io.javalin', name:'javalin', version:'3.8.0'
-    compile ('net.dv8tion:JDA:4.1.1_145') {
+    compile ('net.dv8tion:JDA:4.2.0_179') {
         exclude module: 'opus-java'
     }
     compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.3.1'
