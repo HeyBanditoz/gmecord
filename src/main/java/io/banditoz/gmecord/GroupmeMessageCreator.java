@@ -3,6 +3,9 @@ package io.banditoz.gmecord;
 import io.banditoz.gmecord.api.Attachment;
 import io.banditoz.gmecord.api.BotMessage;
 import io.banditoz.gmecord.web.MessageHandler;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -12,8 +15,9 @@ public class GroupmeMessageCreator {
     private final BotMessage message;
     private StringBuilder initialMessage;
     private final List<Attachment> initialAttachments;
+    private Member sender;
 
-    public GroupmeMessageCreator(String initialMessage, boolean isSystemMessage) {
+    public GroupmeMessageCreator(String initialMessage, boolean isSystemMessage, Member sender) {
         if (isSystemMessage) {
             this.initialMessage = new StringBuilder(initialMessage);
             this.initialMessage.insert(0, "<SYSTEM MESSAGE> ");
@@ -23,11 +27,12 @@ public class GroupmeMessageCreator {
         }
         message = new BotMessage();
         initialAttachments = new ArrayList<>();
+        this.sender = sender;
 
         build();
     }
 
-    public GroupmeMessageCreator(String initialMessage, boolean isSystemMessage, ArrayList<Attachment> attachments) {
+    public GroupmeMessageCreator(String initialMessage, boolean isSystemMessage, ArrayList<Attachment> attachments, Member sender) {
         if (isSystemMessage) {
             this.initialMessage = new StringBuilder(initialMessage);
             this.initialMessage.insert(0, "<SYSTEM MESSAGE> ");
@@ -37,6 +42,7 @@ public class GroupmeMessageCreator {
         }
         message = new BotMessage();
         initialAttachments = attachments;
+        this.sender=sender;
 
         build();
     }
@@ -80,14 +86,13 @@ public class GroupmeMessageCreator {
             int index = initialMessage.indexOf("@GroupmeBridge"); // if someone pings the bridge, ping the last user other than the bot
             initialMessage.replace(index, index + 14, "@" + MessageHandler.lastUser); // length of @GroupmeBridge
         }
-        if (initialMessage.toString().contains("@everyone")) {
+        if (initialMessage.toString().contains("@everyone") && sender.hasPermission(Permission.MESSAGE_MENTION_EVERYONE)) {
             int index = initialMessage.indexOf("@everyone");
-            initialMessage.replace(index - 1, index + 9, ""); // length of @everyone
+            initialMessage.replace(index, index + 9, ""); // length of @everyone
             for (String s : Bot.getMentionableGroupme().keySet()) {
                 initialMessage.insert(index, "@" + s + " ");
                 index += s.length() + 2; // '@' and ' ' are two characters.
             }
-            
         }
         for (String k : Bot.getMentionableGroupme().keySet()) {
             if (initialMessage.toString().contains("@" + k)) {
